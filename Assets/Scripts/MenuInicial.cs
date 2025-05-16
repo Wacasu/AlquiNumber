@@ -13,4 +13,8 @@ public class MenuInicial : MonoBehaviour
         Debug.Log("Salir...");
         Application.Quit();
     }
+    public void Atras()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
 }
