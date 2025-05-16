@@ -222,7 +222,11 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      caldero-removebg-preview_0: -3762479113327902617
+      caldero-removebg-preview_1: 4331796339916199725
+      caldero-removebg-preview_2: -4358014528898010864
+      caldero-removebg-preview_3: 7747858976292254854
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
