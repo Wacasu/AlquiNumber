@@ -15,6 +15,7 @@ public class MenuInicial : MonoBehaviour
     }
     public void Atras()
     {
+        Destroy(GameObject.FindWithTag("opciones"));
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 }
