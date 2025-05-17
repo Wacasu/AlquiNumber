@@ -15,10 +15,10 @@ public class ProblemaManager : MonoBehaviour
     public GameObject ingredientePrefab;
 
     [Header("Slots de Spawn")]
-    public Transform[] spawnSlots; // 4 slots vacíos en la escena para poner ingredientes
+    public Transform[] spawnSlots;
 
     private List<string[]> csvData = new List<string[]>();
-    private string[] metodos; // nombres de métodos desde la primera fila
+    private string[] metodos;
 
     void Start()
     {
@@ -29,8 +29,8 @@ public class ProblemaManager : MonoBehaviour
     void CargarCSV()
     {
         StringReader reader = new StringReader(csvFile.text);
-
         bool firstLine = true;
+
         while (reader.Peek() > -1)
         {
             string line = reader.ReadLine();
@@ -38,7 +38,7 @@ public class ProblemaManager : MonoBehaviour
 
             if (firstLine)
             {
-                metodos = values; // guardamos la primera fila (nombres métodos)
+                metodos = values;
                 firstLine = false;
             }
             else
@@ -56,20 +56,14 @@ public class ProblemaManager : MonoBehaviour
             return;
         }
 
-        // Elegir problema aleatorio (fila)
         int problemaIndex = Random.Range(0, csvData.Count);
         string[] filaProblema = csvData[problemaIndex];
-
-        // Mostrar problema (primera columna)
         string problema = filaProblema[0];
         textoProblema.text = problema;
 
-
-        // Encontrar métodos con 1 (válidos) y con 0 (inválidos)
         List<int> validos = new List<int>();
         List<int> invalidos = new List<int>();
 
-        // Empieza en 1 porque la columna 0 es el problema
         for (int i = 1; i < filaProblema.Length; i++)
         {
             if (filaProblema[i] == "1")
@@ -80,14 +74,12 @@ public class ProblemaManager : MonoBehaviour
 
         if (validos.Count == 0 || invalidos.Count < 3)
         {
-            Debug.LogError("No hay suficientes métodos válidos o inválidos para este problema.");
+            Debug.LogError("No hay suficientes métodos válidos o inválidos.");
             return;
         }
 
-        // Elegir 1 método válido al azar
         int metodoValido = validos[Random.Range(0, validos.Count)];
 
-        // Elegir 3 métodos inválidos al azar
         List<int> metodoInvalidos = new List<int>();
         while (metodoInvalidos.Count < 3)
         {
@@ -96,31 +88,35 @@ public class ProblemaManager : MonoBehaviour
                 metodoInvalidos.Add(inval);
         }
 
-        // Crear lista de opciones (1 válido + 3 inválidos)
-        List<int> opciones = new List<int>(metodoInvalidos);
-        opciones.Add(metodoValido);
+        List<(int index, bool esCorrecto)> opciones = new List<(int, bool)>
+        {
+            (metodoValido, true)
+        };
 
-        // Mezclar lista para que el método válido esté en posición aleatoria
+        foreach (int invalido in metodoInvalidos)
+            opciones.Add((invalido, false));
+
+        // Mezclar lista
         for (int i = 0; i < opciones.Count; i++)
         {
             int rnd = Random.Range(0, opciones.Count);
-            int temp = opciones[rnd];
+            var temp = opciones[rnd];
             opciones[rnd] = opciones[i];
             opciones[i] = temp;
         }
 
-        // Instanciar ingredientes en slots con el nombre del método
+        // Instanciar ingredientes
         for (int i = 0; i < spawnSlots.Length; i++)
         {
             GameObject ing = Instantiate(ingredientePrefab, spawnSlots[i].position, Quaternion.identity);
-            ing.transform.SetParent(spawnSlots[i]);
+            ing.transform.SetParent(spawnSlots[i], false);
 
             Ingrediente ingredienteScript = ing.GetComponent<Ingrediente>();
             if (ingredienteScript != null)
             {
-                int metodoIndex = opciones[i];
+                var (metodoIndex, esCorrecto) = opciones[i];
                 string nombreMetodo = metodos[metodoIndex];
-                ingredienteScript.SetMetodo(nombreMetodo);
+                ingredienteScript.SetMetodo(nombreMetodo, esCorrecto);
             }
             else
             {
