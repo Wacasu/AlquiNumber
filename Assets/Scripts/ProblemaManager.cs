@@ -1,87 +1,131 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
+using TMPro;
 
 public class ProblemaManager : MonoBehaviour
 {
-    public TextAsset archivoCSV;
+    [Header("Texto en pantalla")]
+    public TextMeshProUGUI textoProblema;
+
+    [Header("CSV")]
+    public TextAsset csvFile;
+
+    [Header("Ingrediente Prefab")]
+    public GameObject ingredientePrefab;
+
+    [Header("Slots de Spawn")]
+    public Transform[] spawnSlots; // 4 slots vacíos en la escena para poner ingredientes
+
+    private List<string[]> csvData = new List<string[]>();
+    private string[] metodos; // nombres de métodos desde la primera fila
 
     void Start()
     {
-        MostrarProblema();
+        CargarCSV();
+        MostrarProblemaYSpawn();
     }
 
-    void MostrarProblema()
+    void CargarCSV()
     {
-        if (archivoCSV == null)
+        StringReader reader = new StringReader(csvFile.text);
+
+        bool firstLine = true;
+        while (reader.Peek() > -1)
         {
-            Debug.LogError("❌ No se asignó el archivo CSV.");
+            string line = reader.ReadLine();
+            string[] values = line.Split(',');
+
+            if (firstLine)
+            {
+                metodos = values; // guardamos la primera fila (nombres métodos)
+                firstLine = false;
+            }
+            else
+            {
+                csvData.Add(values);
+            }
+        }
+    }
+
+    void MostrarProblemaYSpawn()
+    {
+        if (csvData.Count == 0 || metodos.Length == 0)
+        {
+            Debug.LogError("CSV no cargado correctamente.");
             return;
         }
 
-        string[] lineas = archivoCSV.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        // Elegir problema aleatorio (fila)
+        int problemaIndex = Random.Range(0, csvData.Count);
+        string[] filaProblema = csvData[problemaIndex];
 
-        if (lineas.Length < 2)
+        // Mostrar problema (primera columna)
+        string problema = filaProblema[0];
+        textoProblema.text = problema;
+
+
+        // Encontrar métodos con 1 (válidos) y con 0 (inválidos)
+        List<int> validos = new List<int>();
+        List<int> invalidos = new List<int>();
+
+        // Empieza en 1 porque la columna 0 es el problema
+        for (int i = 1; i < filaProblema.Length; i++)
         {
-            Debug.LogError("❌ El archivo CSV no tiene suficientes datos.");
+            if (filaProblema[i] == "1")
+                validos.Add(i);
+            else if (filaProblema[i] == "0")
+                invalidos.Add(i);
+        }
+
+        if (validos.Count == 0 || invalidos.Count < 3)
+        {
+            Debug.LogError("No hay suficientes métodos válidos o inválidos para este problema.");
             return;
         }
 
-        // Leer encabezados (métodos)
-        string[] encabezados = lineas[0].Split(',').Skip(1).ToArray();
+        // Elegir 1 método válido al azar
+        int metodoValido = validos[Random.Range(0, validos.Count)];
 
-        // Guardar filas válidas (mismo número de columnas que encabezado + 1)
-        List<string[]> filasValidas = new();
-        for (int i = 1; i < lineas.Length; i++)
+        // Elegir 3 métodos inválidos al azar
+        List<int> metodoInvalidos = new List<int>();
+        while (metodoInvalidos.Count < 3)
         {
-            string[] columnas = lineas[i].Split(',');
-
-            if (columnas.Length == encabezados.Length + 1)
-                filasValidas.Add(columnas);
+            int inval = invalidos[Random.Range(0, invalidos.Count)];
+            if (!metodoInvalidos.Contains(inval))
+                metodoInvalidos.Add(inval);
         }
 
-        if (filasValidas.Count == 0)
-        {
-            Debug.LogError("❌ No hay filas válidas en el CSV.");
-            return;
-        }
+        // Crear lista de opciones (1 válido + 3 inválidos)
+        List<int> opciones = new List<int>(metodoInvalidos);
+        opciones.Add(metodoValido);
 
-        // Elegir una fila al azar (problema)
-        string[] fila = filasValidas[Random.Range(0, filasValidas.Count)];
-        string problemaTexto = fila[0];
-
-        // Crear listas de métodos correctos (1) e incorrectos (0)
-        List<string> metodosCorrectos = new();
-        List<string> metodosIncorrectos = new();
-
-        for (int i = 1; i < fila.Length; i++)
-        {
-            if (fila[i].Trim() == "1")
-                metodosCorrectos.Add(encabezados[i - 1]);
-            else if (fila[i].Trim() == "0")
-                metodosIncorrectos.Add(encabezados[i - 1]);
-        }
-
-        if (metodosCorrectos.Count == 0 || metodosIncorrectos.Count < 3)
-        {
-            Debug.LogWarning("⚠️ No hay suficientes métodos correctos o incorrectos en esta fila.");
-            return;
-        }
-
-        // Escoger 1 correcto y 3 incorrectos al azar
-        string metodoCorrecto = metodosCorrectos[Random.Range(0, metodosCorrectos.Count)];
-        List<string> opciones = new List<string> { metodoCorrecto };
-        opciones.AddRange(metodosIncorrectos.OrderBy(x => Random.value).Take(3));
-
-        // Mezclar opciones
-        opciones = opciones.OrderBy(x => Random.value).ToList();
-
-        // Mostrar
-        Debug.Log("🧠 Problema: " + problemaTexto);
+        // Mezclar lista para que el método válido esté en posición aleatoria
         for (int i = 0; i < opciones.Count; i++)
         {
-            Debug.Log($"🔹 Opción {i + 1}: {opciones[i]}");
+            int rnd = Random.Range(0, opciones.Count);
+            int temp = opciones[rnd];
+            opciones[rnd] = opciones[i];
+            opciones[i] = temp;
         }
-        Debug.Log("✅ Respuesta correcta: " + metodoCorrecto);
+
+        // Instanciar ingredientes en slots con el nombre del método
+        for (int i = 0; i < spawnSlots.Length; i++)
+        {
+            GameObject ing = Instantiate(ingredientePrefab, spawnSlots[i].position, Quaternion.identity);
+            ing.transform.SetParent(spawnSlots[i]);
+
+            Ingrediente ingredienteScript = ing.GetComponent<Ingrediente>();
+            if (ingredienteScript != null)
+            {
+                int metodoIndex = opciones[i];
+                string nombreMetodo = metodos[metodoIndex];
+                ingredienteScript.SetMetodo(nombreMetodo);
+            }
+            else
+            {
+                Debug.LogWarning("El prefab no tiene el script Ingrediente.");
+            }
+        }
     }
 }
