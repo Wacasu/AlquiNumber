@@ -9,47 +9,50 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     [Header("UI")]
     public TextMeshProUGUI feedbackTexto;
     public GameObject pantallaGameOver;
+    public GameObject pantallaVictoria;
     public TextMeshProUGUI vidasTexto;
-    public TextMeshProUGUI temporizadorTexto;
+
+    [Header("Botones Pantallas")]
+    public Button botonMenuGameOver;
+    public Button botonMenuVictoria;
+    public Button botonSiguienteNivel;
+
+    [Header("Sonidos")]
+    public AudioClip sonidoCorrecto;
+    public AudioClip sonidoIncorrecto;
+    public AudioClip sonidoVictoria;
+    public AudioClip sonidoDerrota;
 
     [Header("Configuración del juego")]
     public int vidasIniciales = 3;
-    public float tiempoPorProblema = 30f; // segundos
+    public int preguntasParaGanar = 5;
 
     private int vidasActuales;
-    private float tiempoRestante;
-    private bool problemaActivo = true;
+    private int preguntasCorrectas;
+    private AudioSource audioSource;
 
     void Start()
     {
         vidasActuales = vidasIniciales;
-        ActualizarVidasUI();
-        feedbackTexto.text = "";
+        preguntasCorrectas = 0;
+        audioSource = GetComponent<AudioSource>();
+
         pantallaGameOver.SetActive(false);
+        pantallaVictoria.SetActive(false);
+        feedbackTexto.text = "";
+        ActualizarVidasUI();
 
-        tiempoRestante = tiempoPorProblema;
-        problemaActivo = true;
-    }
-
-    void Update()
-    {
-        if (!problemaActivo || vidasActuales <= 0) return;
-
-        tiempoRestante -= Time.deltaTime;
-        tiempoRestante = Mathf.Max(0, tiempoRestante);
-
-        ActualizarTemporizadorUI();
-
-        if (tiempoRestante <= 0f)
-        {
-            TiempoAgotado();
-        }
+        // Botones
+        if (botonMenuGameOver != null)
+            botonMenuGameOver.onClick.AddListener(() => SceneManager.LoadScene("Menu"));
+        if (botonMenuVictoria != null)
+            botonMenuVictoria.onClick.AddListener(() => SceneManager.LoadScene("Menu"));
+        if (botonSiguienteNivel != null)
+            botonSiguienteNivel.onClick.AddListener(() => SceneManager.LoadScene("Nivel2"));
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (!problemaActivo) return;
-
         GameObject dragged = eventData.pointerDrag;
         if (dragged == null) return;
 
@@ -57,14 +60,25 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
         if (ingrediente != null)
         {
-            problemaActivo = false;
-
             if (ingrediente.EsCorrecto())
             {
+                preguntasCorrectas++;
                 feedbackTexto.text = "¡Correcto!";
                 feedbackTexto.color = Color.green;
 
-                Invoke(nameof(RecargarEscena), 1.2f);
+                if (audioSource && sonidoCorrecto)
+                    audioSource.PlayOneShot(sonidoCorrecto);
+
+                Destroy(dragged);
+
+                if (preguntasCorrectas >= preguntasParaGanar)
+                {
+                    Invoke(nameof(MostrarPantallaVictoria), 1.2f);
+                }
+                else
+                {
+                    Invoke(nameof(RecargarEscena), 1.2f);
+                }
             }
             else
             {
@@ -74,37 +88,16 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                 feedbackTexto.text = "Incorrecto. Intenta otra vez.";
                 feedbackTexto.color = Color.red;
 
+                if (audioSource && sonidoIncorrecto)
+                    audioSource.PlayOneShot(sonidoIncorrecto);
+
+                Destroy(dragged);
+
                 if (vidasActuales <= 0)
                 {
-                    GameOver();
-                }
-                else
-                {
-                    // Reiniciar temporizador para siguiente intento
-                    ReiniciarTemporizador();
-                    problemaActivo = true;
+                    Invoke(nameof(GameOver), 1.2f);
                 }
             }
-
-            Destroy(dragged);
-        }
-    }
-
-    void TiempoAgotado()
-    {
-        vidasActuales--;
-        ActualizarVidasUI();
-        feedbackTexto.text = "¡Tiempo agotado!";
-        feedbackTexto.color = Color.red;
-
-        if (vidasActuales <= 0)
-        {
-            problemaActivo = false;
-            GameOver();
-        }
-        else
-        {
-            ReiniciarTemporizador();
         }
     }
 
@@ -112,18 +105,6 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     {
         if (vidasTexto != null)
             vidasTexto.text = $"Vidas: {vidasActuales}";
-    }
-
-    void ActualizarTemporizadorUI()
-    {
-        if (temporizadorTexto != null)
-            temporizadorTexto.text = $"Tiempo: {tiempoRestante:F1}s";
-    }
-
-    void ReiniciarTemporizador()
-    {
-        tiempoRestante = tiempoPorProblema;
-        problemaActivo = true;
     }
 
     void RecargarEscena()
@@ -136,5 +117,20 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         pantallaGameOver.SetActive(true);
         feedbackTexto.text = "Has perdido todas tus vidas.";
         feedbackTexto.color = Color.red;
+
+        if (audioSource && sonidoDerrota)
+            audioSource.PlayOneShot(sonidoDerrota);
+    }
+
+    void MostrarPantallaVictoria()
+    {
+        pantallaVictoria.SetActive(true);
+        feedbackTexto.text = "¡Ganaste!";
+        feedbackTexto.color = Color.green;
+
+        if (audioSource && sonidoVictoria)
+            audioSource.PlayOneShot(sonidoVictoria);
+
+        PlayerPrefs.SetInt("NivelSuperado", 1); // Marca como superado
     }
 }
