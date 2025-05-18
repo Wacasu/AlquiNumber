@@ -2,9 +2,10 @@
 using UnityEngine;
 using System.IO;
 using TMPro;
-
+using UnityEngine.UI;
 public class ProblemaManager : MonoBehaviour
 {
+
     [Header("Texto en pantalla")]
     public TextMeshProUGUI textoProblema;
 
@@ -20,10 +21,14 @@ public class ProblemaManager : MonoBehaviour
     private List<string[]> csvData = new List<string[]>();
     private string[] metodos; // nombres de métodos desde la primera fila
 
+    
+
+
     void Start()
     {
         CargarCSV();
         MostrarProblemaYSpawn();
+
     }
 
     void CargarCSV()
@@ -126,6 +131,8 @@ public class ProblemaManager : MonoBehaviour
             {
                 Debug.LogWarning("El prefab no tiene el script Ingrediente.");
             }
+
+            Debug.Log("Item " + i + "XD");
         }
     }
 }
