@@ -1257,14 +1257,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5568628}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 0}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1672,10 +1672,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ea82b1d2d4678ff4f96c90671ca1f001, type: 3}
-  m_Resource: {fileID: 8300000, guid: ea82b1d2d4678ff4f96c90671ca1f001, type: 3}
+  m_audioClip: {fileID: 8300000, guid: a421644235d21a14fad99e7f4f7b350d, type: 3}
+  m_Resource: {fileID: 8300000, guid: a421644235d21a14fad99e7f4f7b350d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.178
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2100,7 +2100,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055138129907870339, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1378358125082889860, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_Name
@@ -2108,11 +2108,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1631671394594963315, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 1631671394594963315, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2005992788023707969, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_TagString
@@ -2176,19 +2176,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2853841375447977850, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4643253695588536532, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 4643253695588536532, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4643253695588536532, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8647587407489311219, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
       propertyPath: m_IsActive
