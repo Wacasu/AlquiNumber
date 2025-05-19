@@ -24,10 +24,13 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public AudioClip sonidoVictoria;
     public AudioClip sonidoDerrota;
 
-    [Header("Configuraci�n del juego")]
+    [Header("Configuración del juego")]
     public int vidasIniciales = 3;
     public int preguntasParaGanar = 5;
     public float tiempoPorPregunta = 20f;
+
+    [Header("Pregunta Sorpresa")]
+    [SerializeField] private PreguntaSorpresa preguntaSorpresa;
 
     private int vidasActuales;
     private int preguntasCorrectas;
@@ -88,16 +91,27 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             if (ingrediente.EsCorrecto())
             {
                 preguntasCorrectas++;
-                feedbackTexto.text = "�Correcto!";
+                feedbackTexto.text = "¡Correcto!";
                 feedbackTexto.color = Color.green;
 
                 if (audioSource && sonidoCorrecto)
                     audioSource.PlayOneShot(sonidoCorrecto);
 
                 if (preguntasCorrectas >= preguntasParaGanar)
-                    Invoke(nameof(MostrarPantallaVictoria), 1.2f);
+                {
+                    if (preguntaSorpresa != null)
+                    {
+                        preguntaSorpresa.MostrarPreguntaSorpresa();
+                    }
+                    else
+                    {
+                        Invoke(nameof(MostrarPantallaVictoria), 1.2f);
+                    }
+                }
                 else
+                {
                     ReiniciarRonda();
+                }
             }
             else
             {
@@ -148,11 +162,11 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             audioSource.PlayOneShot(sonidoDerrota);
     }
 
-    void MostrarPantallaVictoria()
+    public void MostrarPantallaVictoria()
     {
         juegoActivo = false;
         pantallaVictoria.SetActive(true);
-        feedbackTexto.text = "�Ganaste!";
+        feedbackTexto.text = "¡Ganaste!";
         feedbackTexto.color = Color.green;
 
         if (audioSource && sonidoVictoria)
