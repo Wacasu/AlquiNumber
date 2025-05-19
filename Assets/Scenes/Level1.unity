@@ -757,15 +757,17 @@ MonoBehaviour:
   pantallaGameOver: {fileID: 1024219404}
   pantallaVictoria: {fileID: 132945642}
   vidasTexto: {fileID: 207734253}
+  timerTexto: {fileID: 1454470316}
   botonMenuGameOver: {fileID: 1665154049}
   botonMenuVictoria: {fileID: 1926936501}
   botonSiguienteNivel: {fileID: 0}
   sonidoCorrecto: {fileID: 8300000, guid: 059469ff16ffe62458ee1b641ce6ad6c, type: 3}
   sonidoIncorrecto: {fileID: 8300000, guid: 08097e43607cf52449a96ff85e0c6c9c, type: 3}
   sonidoVictoria: {fileID: 8300000, guid: d1fc775aacffed1408dfc2cfafa7a79b, type: 3}
-  sonidoDerrota: {fileID: 8300000, guid: b11d08dd3e738a945b2e15bda40e23f5, type: 3}
+  sonidoDerrota: {fileID: 8300000, guid: 34e0baab5ca852c498515e242bbd38ee, type: 3}
   vidasIniciales: 3
-  preguntasParaGanar: 5
+  preguntasParaGanar: 3
+  tiempoPorPregunta: 20
 --- !u!114 &276441044
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1299,8 +1301,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eefad63c042ad214c8877243ce31f0b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floatAmplitude: 10
-  floatFrequency: 1
+  floatAmplitude: 16
+  floatFrequency: 2
   auraObject: {fileID: 0}
 --- !u!225 &768992664
 CanvasGroup:
@@ -1392,6 +1394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nombreTexto: {fileID: 654490359}
+  iconoImagen: {fileID: 0}
+  descripcionLarga: 
 --- !u!114 &768992670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2152,13 +2156,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textoProblema: {fileID: 373575709}
-  csvFile: {fileID: 4900000, guid: 257f0b1f910b23f4496ae1941936e301, type: 3}
+  csvFile: {fileID: 4900000, guid: 24a4bd87e6cb3b048975bb17e6db9ca9, type: 3}
   ingredientePrefab: {fileID: 768992661}
   spawnSlots:
   - {fileID: 634096453}
   - {fileID: 1956740317}
   - {fileID: 1087453270}
   - {fileID: 481967841}
+  metodoSprites:
+  - nombreMetodo: 
+    sprite: {fileID: 0}
 --- !u!1 &1087453269
 GameObject:
   m_ObjectHideFlags: 0
@@ -3371,7 +3378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 499, y: -24.999992}
+  m_AnchoredPosition: {x: 0, y: -0.0000038146973}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1711772088
@@ -3428,8 +3435,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0

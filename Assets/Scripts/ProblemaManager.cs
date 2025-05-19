@@ -67,7 +67,7 @@ public class ProblemaManager : MonoBehaviour
         }
     }
 
-    // Método para asignar un sprite a un método específico
+    // Método para asignar un sprite específico a un método
     public void AsignarSpriteAMetodo(string nombreMetodo, Sprite sprite)
     {
         var metodoSprite = metodoSprites.Find(m => m.nombreMetodo == nombreMetodo);
