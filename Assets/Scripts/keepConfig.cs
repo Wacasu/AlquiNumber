@@ -6,7 +6,7 @@ public class keepConfig : MonoBehaviour
 {
     private void Awake()
     {
-        var noDestruirEntreEscenas = FindObjectsOfType<keepConfig>();
+        var noDestruirEntreEscenas = FindObjectsByType<keepConfig>(FindObjectsSortMode.None);
 
         if (noDestruirEntreEscenas.Length > 1)
         {
