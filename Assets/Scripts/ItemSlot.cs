@@ -11,6 +11,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public GameObject pantallaGameOver;
     public GameObject pantallaVictoria;
     public TextMeshProUGUI vidasTexto;
+    public TextMeshProUGUI timerTexto;
 
     [Header("Botones Pantallas")]
     public Button botonMenuGameOver;
@@ -23,26 +24,35 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public AudioClip sonidoVictoria;
     public AudioClip sonidoDerrota;
 
-    [Header("Configuración del juego")]
+    [Header("ConfiguraciÃ³n del juego")]
     public int vidasIniciales = 3;
     public int preguntasParaGanar = 5;
+    public float tiempoPorPregunta = 20f;
+
+    [Header("Pregunta Sorpresa")]
+    [SerializeField] private PreguntaSorpresa preguntaSorpresa;
 
     private int vidasActuales;
     private int preguntasCorrectas;
+    private float tiempoRestante;
+    private bool juegoActivo = true;
     private AudioSource audioSource;
+    private ProblemaManager problemaManager;
 
     void Start()
     {
         vidasActuales = vidasIniciales;
         preguntasCorrectas = 0;
+        tiempoRestante = tiempoPorPregunta;
+        juegoActivo = true;
         audioSource = GetComponent<AudioSource>();
+        problemaManager = FindObjectOfType<ProblemaManager>();
 
         pantallaGameOver.SetActive(false);
         pantallaVictoria.SetActive(false);
         feedbackTexto.text = "";
         ActualizarVidasUI();
 
-        // Botones
         if (botonMenuGameOver != null)
             botonMenuGameOver.onClick.AddListener(() => SceneManager.LoadScene("Menu"));
         if (botonMenuVictoria != null)
@@ -51,8 +61,24 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             botonSiguienteNivel.onClick.AddListener(() => SceneManager.LoadScene("Nivel2"));
     }
 
+    void Update()
+    {
+        if (!juegoActivo) return;
+
+        tiempoRestante -= Time.deltaTime;
+        if (timerTexto != null)
+            timerTexto.text = $"Tiempo: {Mathf.CeilToInt(tiempoRestante)}s";
+
+        if (tiempoRestante <= 0)
+        {
+            GameOver();
+        }
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
+        if (!juegoActivo) return;
+
         GameObject dragged = eventData.pointerDrag;
         if (dragged == null) return;
 
@@ -60,24 +86,31 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
         if (ingrediente != null)
         {
+            Destroy(dragged);
+
             if (ingrediente.EsCorrecto())
             {
                 preguntasCorrectas++;
-                feedbackTexto.text = "¡Correcto!";
+                feedbackTexto.text = "Â¡Correcto!";
                 feedbackTexto.color = Color.green;
 
                 if (audioSource && sonidoCorrecto)
                     audioSource.PlayOneShot(sonidoCorrecto);
 
-                Destroy(dragged);
-
                 if (preguntasCorrectas >= preguntasParaGanar)
                 {
-                    Invoke(nameof(MostrarPantallaVictoria), 1.2f);
+                    if (preguntaSorpresa != null)
+                    {
+                        preguntaSorpresa.MostrarPreguntaSorpresa();
+                    }
+                    else
+                    {
+                        Invoke(nameof(MostrarPantallaVictoria), 1.2f);
+                    }
                 }
                 else
                 {
-                    Invoke(nameof(RecargarEscena), 1.2f);
+                    ReiniciarRonda();
                 }
             }
             else
@@ -91,12 +124,10 @@ public class ItemSlot : MonoBehaviour, IDropHandler
                 if (audioSource && sonidoIncorrecto)
                     audioSource.PlayOneShot(sonidoIncorrecto);
 
-                Destroy(dragged);
-
                 if (vidasActuales <= 0)
-                {
                     Invoke(nameof(GameOver), 1.2f);
-                }
+                else
+                    ReiniciarRonda();
             }
         }
     }
@@ -107,30 +138,40 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             vidasTexto.text = $"Vidas: {vidasActuales}";
     }
 
-    void RecargarEscena()
+    void ReiniciarRonda()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        tiempoRestante = tiempoPorPregunta;
+        foreach (Transform slot in problemaManager.spawnSlots)
+        {
+            foreach (Transform child in slot)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+        problemaManager.MostrarProblemaYSpawn();
     }
 
     void GameOver()
     {
+        juegoActivo = false;
         pantallaGameOver.SetActive(true);
-        feedbackTexto.text = "Has perdido todas tus vidas.";
+        feedbackTexto.text = "Has perdido todas tus vidas o el tiempo.";
         feedbackTexto.color = Color.red;
 
         if (audioSource && sonidoDerrota)
             audioSource.PlayOneShot(sonidoDerrota);
     }
 
-    void MostrarPantallaVictoria()
+    public void MostrarPantallaVictoria()
     {
+        juegoActivo = false;
         pantallaVictoria.SetActive(true);
-        feedbackTexto.text = "¡Ganaste!";
+        feedbackTexto.text = "Â¡Ganaste!";
         feedbackTexto.color = Color.green;
 
         if (audioSource && sonidoVictoria)
             audioSource.PlayOneShot(sonidoVictoria);
 
-        PlayerPrefs.SetInt("NivelSuperado", 1); // Marca como superado
+        PlayerPrefs.SetInt("NivelSuperado", 1);
     }
 }

@@ -1,34 +1,61 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Ingrediente : MonoBehaviour
 {
+    [Header("Referencias UI")]
     [SerializeField] private TextMeshProUGUI nombreTexto;
+    [SerializeField] private Image iconoImagen;
+
+    [Header("Datos del Método")]
+    [SerializeField] private string descripcionLarga;
 
     private string metodoNombre;
-    private bool esCorrecto = false;
+    private bool esCorrecto;
 
-    /// <summary>
-    /// Asigna el nombre del m�todo y si es correcto.
-    /// </summary>
-    public void SetMetodo(string metodo, bool correcto)
+    private void Awake()
+    {
+        if (nombreTexto == null)
+            Debug.LogWarning($"{gameObject.name} → No se asignó 'nombreTexto' (TextMeshProUGUI)");
+
+        if (iconoImagen == null)
+            Debug.LogWarning($"{gameObject.name} → No se asignó 'iconoImagen' (Image)");
+    }
+
+    public void SetMetodo(string metodo, bool correcto, Sprite icono = null, string descripcion = "")
     {
         metodoNombre = metodo;
         esCorrecto = correcto;
+        descripcionLarga = descripcion;
 
         if (nombreTexto != null)
             nombreTexto.text = metodoNombre;
-        else
-            Debug.LogWarning("No asignaste el TextMeshProUGUI en Ingrediente.");
+
+        if (iconoImagen != null)
+        {
+            iconoImagen.sprite = icono;
+            iconoImagen.enabled = icono != null;
+        }
+
+        AplicarEstiloResaltado();
     }
 
-    public bool EsCorrecto()
-    {
-        return esCorrecto;
-    }
+    public void AsignarCorrectitud(bool correcto) => esCorrecto = correcto;
 
-    public string ObtenerMetodo()
+    public void SetDescripcion(string descripcion) => descripcionLarga = descripcion;
+
+    public string ObtenerDescripcion() => descripcionLarga;
+
+    public bool EsCorrecto() => esCorrecto;
+
+    public string ObtenerMetodo() => metodoNombre;
+
+    private void AplicarEstiloResaltado()
     {
-        return metodoNombre;
+        if (iconoImagen != null)
+        {
+            iconoImagen.color = new Color(1f, 1f, 0.85f); // Amarillo claro (ligeramente más sutil)
+        }
     }
 }

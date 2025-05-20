@@ -2,13 +2,12 @@
 using UnityEngine;
 using System.IO;
 using TMPro;
-using UnityEngine.UI;
+
 public class ProblemaManager : MonoBehaviour
 {
-
     [Header("Texto en pantalla")]
     public TextMeshProUGUI textoProblema;
-
+    
     [Header("CSV")]
     public TextAsset csvFile;
 
@@ -18,21 +17,28 @@ public class ProblemaManager : MonoBehaviour
     [Header("Slots de Spawn")]
     public Transform[] spawnSlots;
 
+    [Header("Sprites de Métodos")]
+    [SerializeField] private List<MetodoSprite> metodoSprites = new List<MetodoSprite>();
+
     private List<string[]> csvData = new List<string[]>();
     private string[] metodos;
 
-    
-
-
     void Start()
     {
-        CargarCSV();
-        MostrarProblemaYSpawn();
-
+        if (csvFile != null)
+        {
+            CargarCSV();
+            MostrarProblemaYSpawn();
+        }
+        else
+        {
+            Debug.LogError("No hay archivo CSV asignado.");
+        }
     }
 
     void CargarCSV()
     {
+        csvData.Clear();
         StringReader reader = new StringReader(csvFile.text);
         bool firstLine = true;
 
@@ -44,6 +50,14 @@ public class ProblemaManager : MonoBehaviour
             if (firstLine)
             {
                 metodos = values;
+                // Crear entradas en metodoSprites para cada método si no existen
+                foreach (string metodo in metodos)
+                {
+                    if (!metodoSprites.Exists(m => m.nombreMetodo == metodo))
+                    {
+                        metodoSprites.Add(new MetodoSprite { nombreMetodo = metodo, sprite = null });
+                    }
+                }
                 firstLine = false;
             }
             else
@@ -53,7 +67,27 @@ public class ProblemaManager : MonoBehaviour
         }
     }
 
-    void MostrarProblemaYSpawn()
+    // Método para asignar un sprite específico a un método
+    public void AsignarSpriteAMetodo(string nombreMetodo, Sprite sprite)
+    {
+        var metodoSprite = metodoSprites.Find(m => m.nombreMetodo == nombreMetodo);
+        if (metodoSprite != null)
+        {
+            metodoSprite.sprite = sprite;
+        }
+        else
+        {
+            Debug.LogWarning($"No se encontró el método {nombreMetodo} para asignar el sprite");
+        }
+    }
+
+    // Método para obtener todos los métodos disponibles
+    public string[] ObtenerMetodosDisponibles()
+    {
+        return metodos;
+    }
+
+    public void MostrarProblemaYSpawn()
     {
         if (csvData.Count == 0 || metodos.Length == 0)
         {
@@ -110,25 +144,32 @@ public class ProblemaManager : MonoBehaviour
             opciones[i] = temp;
         }
 
-        // Instanciar ingredientes
-        for (int i = 0; i < spawnSlots.Length; i++)
+        // Instanciar ingredientes en los spawn slots
+        for (int i = 0; i < spawnSlots.Length && i < opciones.Count; i++)
         {
-            GameObject ing = Instantiate(ingredientePrefab, spawnSlots[i].position, Quaternion.identity);
-            ing.transform.SetParent(spawnSlots[i], false);
+            GameObject ing = Instantiate(ingredientePrefab, spawnSlots[i]);
+            ing.transform.localPosition = Vector3.zero; // Asegura que aparezca centrado en el slot
 
             Ingrediente ingredienteScript = ing.GetComponent<Ingrediente>();
             if (ingredienteScript != null)
             {
                 var (metodoIndex, esCorrecto) = opciones[i];
                 string nombreMetodo = metodos[metodoIndex];
-                ingredienteScript.SetMetodo(nombreMetodo, esCorrecto);
+                
+                // Buscar el sprite correspondiente al método
+                Sprite spriteMetodo = null;
+                var metodoSprite = metodoSprites.Find(m => m.nombreMetodo == nombreMetodo);
+                if (metodoSprite != null)
+                {
+                    spriteMetodo = metodoSprite.sprite;
+                }
+                
+                ingredienteScript.SetMetodo(nombreMetodo, esCorrecto, spriteMetodo);
             }
             else
             {
                 Debug.LogWarning("El prefab no tiene el script Ingrediente.");
             }
-
-            Debug.Log("Item " + i + "XD");
         }
     }
 }
