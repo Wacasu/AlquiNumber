@@ -335,6 +335,7 @@ GameObject:
   - component: {fileID: 154944526}
   - component: {fileID: 154944525}
   - component: {fileID: 154944524}
+  - component: {fileID: 154944529}
   m_Layer: 5
   m_Name: Salir
   m_TagString: Untagged
@@ -517,9 +518,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1710955836}
-        m_TargetAssemblyTypeName: MenuInicial, Assembly-CSharp
-        m_MethodName: Atras
+      - m_Target: {fileID: 154944529}
+        m_TargetAssemblyTypeName: RegresarMenuInicial, Assembly-CSharp
+        m_MethodName: CargarMenuInicial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -567,6 +568,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 154944522}
   m_CullTransparentMesh: 1
+--- !u!114 &154944529
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154944522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88154c620a315c244b6b6ba7a25fc88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &207734251
 GameObject:
   m_ObjectHideFlags: 0
@@ -842,7 +855,7 @@ MonoBehaviour:
   timerTexto: {fileID: 1454470316}
   heart1: {fileID: 1054781702}
   heart2: {fileID: 1707342633}
-  heart3: {fileID: 602096743}
+  heart3: {fileID: 0}
   botonMenuGameOver: {fileID: 1665154049}
   botonMenuVictoria: {fileID: 1716307506}
   botonSiguienteNivel: {fileID: 1719139736}
@@ -850,9 +863,9 @@ MonoBehaviour:
   sonidoIncorrecto: {fileID: 8300000, guid: 08097e43607cf52449a96ff85e0c6c9c, type: 3}
   sonidoVictoria: {fileID: 8300000, guid: d1fc775aacffed1408dfc2cfafa7a79b, type: 3}
   sonidoDerrota: {fileID: 8300000, guid: 34e0baab5ca852c498515e242bbd38ee, type: 3}
-  vidasIniciales: 3
-  preguntasParaGanar: 3
-  tiempoPorPregunta: 40
+  vidasIniciales: 2
+  preguntasParaGanar: 7
+  tiempoPorPregunta: 15
   preguntaSorpresa: {fileID: 1094617688}
 --- !u!114 &276441044
 MonoBehaviour:
@@ -1160,81 +1173,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0.000049591, y: -213}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &602096741
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 602096742}
-  - component: {fileID: 602096744}
-  - component: {fileID: 602096743}
-  m_Layer: 5
-  m_Name: iconHeart3
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &602096742
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602096741}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1642265794}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 602, y: 392}
-  m_SizeDelta: {x: 85, y: 85}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &602096743
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602096741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: -205270267638800340, guid: d7e4941c5a593754891b7c521e09ed2e, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &602096744
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 602096741}
-  m_CullTransparentMesh: 1
 --- !u!1 &631538492
 GameObject:
   m_ObjectHideFlags: 0
@@ -4571,7 +4509,7 @@ GameObject:
   - component: {fileID: 1642265795}
   - component: {fileID: 1642265797}
   m_Layer: 5
-  m_Name: Level1
+  m_Name: Level4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4603,7 +4541,6 @@ RectTransform:
   - {fileID: 1454470315}
   - {fileID: 207734252}
   - {fileID: 1054781701}
-  - {fileID: 602096742}
   - {fileID: 1707342632}
   - {fileID: 1011993127}
   - {fileID: 268674840}
@@ -4636,7 +4573,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 9112264307911212159, guid: d7a1a7938af3bd646baba22a1482fa52, type: 3}
+  m_Sprite: {fileID: 6553226877081087483, guid: 78858eda98c10274daf51dc76b9b334c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4678,7 +4615,7 @@ GameObject:
   - component: {fileID: 1665154051}
   - component: {fileID: 1665154050}
   - component: {fileID: 1665154049}
-  - component: {fileID: 1665154048}
+  - component: {fileID: 1665154052}
   m_Layer: 5
   m_Name: "Men\xFARegresar"
   m_TagString: Untagged
@@ -4706,18 +4643,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000026703, y: -110}
   m_SizeDelta: {x: 281.6279, y: 74.7161}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1665154048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1665154046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1a932d5babc5d489a5a92f4f9b50c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1665154049
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4762,9 +4687,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1710955836}
-        m_TargetAssemblyTypeName: MenuInicial, Assembly-CSharp
-        m_MethodName: Atras
+      - m_Target: {fileID: 1665154052}
+        m_TargetAssemblyTypeName: RegresarMenuInicial, Assembly-CSharp
+        m_MethodName: CargarMenuInicial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4812,6 +4737,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1665154046}
   m_CullTransparentMesh: 1
+--- !u!114 &1665154052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1665154046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88154c620a315c244b6b6ba7a25fc88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1697049743
 GameObject:
   m_ObjectHideFlags: 0
@@ -5286,7 +5223,7 @@ GameObject:
   - component: {fileID: 1716307508}
   - component: {fileID: 1716307507}
   - component: {fileID: 1716307506}
-  - component: {fileID: 1716307505}
+  - component: {fileID: 1716307509}
   m_Layer: 5
   m_Name: btn_menuregresar
   m_TagString: Untagged
@@ -5314,18 +5251,6 @@ RectTransform:
   m_AnchoredPosition: {x: 12, y: -207}
   m_SizeDelta: {x: 281.6279, y: 74.7161}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1716307505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1716307503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1a932d5babc5d489a5a92f4f9b50c4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1716307506
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5370,9 +5295,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1710955836}
-        m_TargetAssemblyTypeName: MenuInicial, Assembly-CSharp
-        m_MethodName: Atras
+      - m_Target: {fileID: 1716307509}
+        m_TargetAssemblyTypeName: RegresarMenuInicial, Assembly-CSharp
+        m_MethodName: CargarMenuInicial
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5420,6 +5345,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1716307503}
   m_CullTransparentMesh: 1
+--- !u!114 &1716307509
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1716307503}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88154c620a315c244b6b6ba7a25fc88f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1719139733
 GameObject:
   m_ObjectHideFlags: 0
@@ -5433,6 +5370,7 @@ GameObject:
   - component: {fileID: 1719139737}
   - component: {fileID: 1719139736}
   - component: {fileID: 1719139735}
+  - component: {fileID: 1719139739}
   m_Layer: 5
   m_Name: btn_siguientenivel
   m_TagString: Untagged
@@ -5516,9 +5454,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1710955836}
-        m_TargetAssemblyTypeName: MenuInicial, Assembly-CSharp
-        m_MethodName: Atras
+      - m_Target: {fileID: 1719139739}
+        m_TargetAssemblyTypeName: SiguienteNivel, Assembly-CSharp
+        m_MethodName: CargarSiguienteNivel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5566,6 +5504,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719139733}
   m_CullTransparentMesh: 1
+--- !u!114 &1719139739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719139733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2559630f8f4b8a540803aa4acee4b265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1723544460
 PrefabInstance:
   m_ObjectHideFlags: 0

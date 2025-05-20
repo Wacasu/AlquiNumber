@@ -98,12 +98,18 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
                 if (audioSource && sonidoCorrecto)
                     audioSource.PlayOneShot(sonidoCorrecto);
-
+                
                 // Pausar el juego y mostrar pregunta
                 Time.timeScale = 0f;
                 if (preguntaSorpresa != null)
                 {
                     preguntaSorpresa.MostrarPreguntaSorpresa();
+                }
+                else
+                {
+                    // Si no hay pregunta sorpresa, continuar directamente
+                    IncrementarPreguntasCorrectas();
+                    ContinuarDespuesDePreguntaCorrecta();
                 }
             }
             else

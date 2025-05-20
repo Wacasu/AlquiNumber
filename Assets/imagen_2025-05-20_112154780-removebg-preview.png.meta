@@ -1,10 +1,22 @@
 fileFormatVersion: 2
-guid: 15f266879d666ed43959107e10d3c000
+guid: 61be1aa776bb92a44a1dbb24c4f32c2d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -251134246695591909
-    second: txtBG 1_0
+      213: 6328148518578994258
+    second: imagen_2025-05-20_112154780-removebg-preview_0
+  - first:
+      213: -7988517529273375147
+    second: imagen_2025-05-20_112154780-removebg-preview_1
+  - first:
+      213: -4940969569297967966
+    second: imagen_2025-05-20_112154780-removebg-preview_2
+  - first:
+      213: 7491688925626656134
+    second: imagen_2025-05-20_112154780-removebg-preview_3
+  - first:
+      213: -4856019709969010879
+    second: imagen_2025-05-20_112154780-removebg-preview_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +125,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: txtBG 1_0
+      name: imagen_2025-05-20_112154780-removebg-preview_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 460
-        height: 128
+        x: 33
+        y: 353
+        width: 168
+        height: 159
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +140,96 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b1026c2bbbac38cf0800000000000000
-      internalID: -251134246695591909
+      spriteID: 25cb0d7bc8912d750800000000000000
+      internalID: 6328148518578994258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: imagen_2025-05-20_112154780-removebg-preview_1
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 353
+        width: 168
+        height: 159
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 556eda1d1a5132190800000000000000
+      internalID: -7988517529273375147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: imagen_2025-05-20_112154780-removebg-preview_2
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 195
+        width: 168
+        height: 154
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2a4daf7ea562e6bb0800000000000000
+      internalID: -4940969569297967966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: imagen_2025-05-20_112154780-removebg-preview_3
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 195
+        width: 168
+        height: 153
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 68564bb9263d7f760800000000000000
+      internalID: 7491688925626656134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: imagen_2025-05-20_112154780-removebg-preview_4
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 46
+        width: 184
+        height: 146
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 14f60055dc3fb9cb0800000000000000
+      internalID: -4856019709969010879
       vertices: []
       indices: 
       edges: []
@@ -147,8 +247,7 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable:
-      txtBG 1_0: -251134246695591909
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
