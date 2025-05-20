@@ -2399,7 +2399,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 102291017}
         m_TargetAssemblyTypeName: logicaOpciones, Assembly-CSharp
         m_MethodName: mostrarOpciones
         m_Mode: 1
