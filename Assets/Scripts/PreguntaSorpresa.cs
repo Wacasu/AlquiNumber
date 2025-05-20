@@ -119,6 +119,10 @@ public class PreguntaSorpresa : MonoBehaviour
 
         // Mezclar opciones
         List<int> indices = new List<int> { 0, 1, 2, 3 };
+        int respuestaOriginal = indices[respuestaCorrecta];
+        indices.RemoveAt(respuestaCorrecta);
+        
+        // Mezclar solo las opciones incorrectas
         for (int i = indices.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
@@ -126,13 +130,16 @@ public class PreguntaSorpresa : MonoBehaviour
             indices[i] = indices[j];
             indices[j] = temp;
         }
+        
+        // Insertar la respuesta correcta en una posición aleatoria
+        int posicionCorrecta = Random.Range(0, 4);
+        indices.Insert(posicionCorrecta, respuestaOriginal);
+        respuestaCorrecta = posicionCorrecta;
 
         // Asignar opciones a los botones
         for (int i = 0; i < botonesOpciones.Length; i++)
         {
             textosOpciones[i].text = opciones[preguntaIndex][indices[i]];
-            if (indices[i] == respuestaCorrecta)
-                respuestaCorrecta = i;
         }
     }
 
