@@ -19,12 +19,12 @@ public class PreguntaSorpresa : MonoBehaviour
     private bool preguntaRespondida = false;
     private int respuestaCorrecta = -1;
     private ItemSlot itemSlot;
+    private Color colorNormal = new Color(0.2f, 0.2f, 0.2f); // Color oscuro para los botones
 
     private void Start()
     {
         // Ocultar panel al inicio
-        if (panelPregunta != null)
-            panelPregunta.SetActive(false);
+        OcultarPanel();
 
         // Obtener referencia al ItemSlot
         itemSlot = FindObjectOfType<ItemSlot>();
@@ -34,6 +34,8 @@ public class PreguntaSorpresa : MonoBehaviour
         {
             int index = i; // Necesario para el closure
             botonesOpciones[i].onClick.AddListener(() => ResponderPregunta(index));
+            // Establecer color inicial de los botones
+            botonesOpciones[i].GetComponent<Image>().color = colorNormal;
         }
     }
 
@@ -54,11 +56,11 @@ public class PreguntaSorpresa : MonoBehaviour
         if (panelSiguienteNivel != null)
             panelSiguienteNivel.SetActive(false);
 
-        // Reactivar todos los botones
+        // Reactivar todos los botones y restaurar color normal
         foreach (Button boton in botonesOpciones)
         {
             boton.interactable = true;
-            boton.GetComponent<Image>().color = Color.white;
+            boton.GetComponent<Image>().color = colorNormal;
         }
     }
 
@@ -119,28 +121,57 @@ public class PreguntaSorpresa : MonoBehaviour
         if (opcionSeleccionada == respuestaCorrecta)
         {
             // Respuesta correcta
-            botonesOpciones[opcionSeleccionada].GetComponent<Image>().color = Color.green;
-            Invoke("MostrarSiguienteNivel", tiempoMostrarPregunta);
+            botonesOpciones[opcionSeleccionada].GetComponent<Image>().color = new Color(0.2f, 0.8f, 0.2f); // Verde oscuro
+            
+            // Incrementar puntuación ANTES de reanudar el juego
+            if (itemSlot != null)
+            {
+                itemSlot.IncrementarPreguntasCorrectas();
+            }
+
+            // Invoke("ContinuarJuego", tiempoMostrarPregunta);
+            Invoke("ManejarRespuestaCorrecta", tiempoMostrarPregunta);
         }
         else
         {
             // Respuesta incorrecta
-            botonesOpciones[opcionSeleccionada].GetComponent<Image>().color = Color.red;
-            botonesOpciones[respuestaCorrecta].GetComponent<Image>().color = Color.green;
-            Invoke("MostrarSiguienteNivel", tiempoMostrarPregunta);
+            botonesOpciones[opcionSeleccionada].GetComponent<Image>().color = new Color(0.8f, 0.2f, 0.2f); // Rojo oscuro
+            botonesOpciones[respuestaCorrecta].GetComponent<Image>().color = new Color(0.2f, 0.8f, 0.2f); // Verde oscuro
+            
+            // Restar vida inmediatamente
+            if (itemSlot != null)
+            {
+                itemSlot.PerderVida();
+            }
+            
+            // Ocultar panel después de mostrar la respuesta
+            Invoke("OcultarPanel", tiempoMostrarPregunta);
         }
     }
 
-    private void MostrarSiguienteNivel()
+    private void ManejarRespuestaCorrecta()
     {
-        panelPregunta.SetActive(false);
         if (itemSlot != null)
         {
-            itemSlot.MostrarPantallaVictoria();
+            itemSlot.ContinuarDespuesDePreguntaCorrecta();
         }
-        else if (panelSiguienteNivel != null)
+        OcultarPanel();
+    }
+
+    //private void ContinuarJuego()
+    //{
+    //    if (itemSlot != null)
+    //    {
+    //        itemSlot.ContinuarDespuesDePreguntaCorrecta();
+    //    }
+    //    OcultarPanel();
+    //}
+
+    public void OcultarPanel()
+    {
+        if (panelPregunta != null)
         {
-            panelSiguienteNivel.SetActive(true);
+            panelPregunta.SetActive(false);
         }
     }
 } 

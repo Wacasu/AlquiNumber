@@ -93,63 +93,22 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
             if (ingrediente.EsCorrecto())
             {
-                preguntasCorrectas++;
                 feedbackTexto.text = "¡Correcto!";
                 feedbackTexto.color = Color.green;
 
                 if (audioSource && sonidoCorrecto)
                     audioSource.PlayOneShot(sonidoCorrecto);
 
-                if (preguntasCorrectas >= preguntasParaGanar)
+                // Pausar el juego y mostrar pregunta
+                Time.timeScale = 0f;
+                if (preguntaSorpresa != null)
                 {
-                    if (preguntaSorpresa != null)
-                    {
-                        preguntaSorpresa.MostrarPreguntaSorpresa();
-                    }
-                    else
-                    {
-                        Invoke(nameof(MostrarPantallaVictoria), 1.2f);
-                    }
-                }
-                else
-                {
-                    ReiniciarRonda();
+                    preguntaSorpresa.MostrarPreguntaSorpresa();
                 }
             }
             else
             {
-                vidasActuales--;
-                ActualizarVidasUI();
-
-                if (vidasActuales == 2) {
-
-                    Destroy(heart3);
-                
-                }
-                if (vidasActuales == 1)
-                {
-
-                    Destroy(heart2);
-
-                }
-
-                if (vidasActuales == 0)
-                {
-
-                    Destroy(heart1);
-
-                }
-
-                feedbackTexto.text = "Incorrecto. Intenta otra vez.";
-                feedbackTexto.color = Color.red;
-
-                if (audioSource && sonidoIncorrecto)
-                    audioSource.PlayOneShot(sonidoIncorrecto);
-
-                if (vidasActuales <= 0)
-                    Invoke(nameof(GameOver), 1.2f);
-                else
-                    ReiniciarRonda();
+                PerderVidaPorProblema();
             }
         }
     }
@@ -158,6 +117,19 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     {
         if (vidasTexto != null)
             vidasTexto.text = $"Vidas: {vidasActuales}";
+    }
+
+    void ActualizarCorazones()
+    {
+        if (vidasActuales == 2) {
+            Destroy(heart3);
+        }
+        if (vidasActuales == 1) {
+            Destroy(heart2);
+        }
+        if (vidasActuales == 0) {
+            Destroy(heart1);
+        }
     }
 
     void ReiniciarRonda()
@@ -176,6 +148,10 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     void GameOver()
     {
         juegoActivo = false;
+        if (preguntaSorpresa != null)
+        {
+            preguntaSorpresa.OcultarPanel();
+        }
         pantallaGameOver.SetActive(true);
         feedbackTexto.text = "Has perdido todas tus vidas o el tiempo.";
         feedbackTexto.color = Color.red;
@@ -187,6 +163,10 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public void MostrarPantallaVictoria()
     {
         juegoActivo = false;
+        if (preguntaSorpresa != null)
+        {
+            preguntaSorpresa.OcultarPanel();
+        }
         pantallaVictoria.SetActive(true);
         feedbackTexto.text = "¡Ganaste!";
         feedbackTexto.color = Color.green;
@@ -195,5 +175,66 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             audioSource.PlayOneShot(sonidoVictoria);
 
         PlayerPrefs.SetInt("NivelSuperado", 1);
+    }
+
+    public void ReanudarJuego()
+    {
+        Time.timeScale = 1f;
+        ReiniciarRonda();
+    }
+
+    public void ContinuarDespuesDePreguntaCorrecta()
+    {
+        Time.timeScale = 1f;
+        juegoActivo = true;
+        
+        if (preguntasCorrectas >= preguntasParaGanar)
+        {
+            MostrarPantallaVictoria();
+        }
+        else
+        {
+            ReiniciarRonda();
+            feedbackTexto.text = "";
+        }
+    }
+
+    public void PerderVida()
+    {
+        vidasActuales--;
+        ActualizarVidasUI();
+        ActualizarCorazones();
+        
+        if (vidasActuales <= 0)
+        {
+            GameOver();
+        }
+        else
+        {
+            ReanudarJuego();
+        }
+    }
+
+    private void PerderVidaPorProblema()
+    {
+        vidasActuales--;
+        ActualizarVidasUI();
+        ActualizarCorazones();
+
+        feedbackTexto.text = "Incorrecto. Intenta otra vez.";
+        feedbackTexto.color = Color.red;
+
+        if (audioSource && sonidoIncorrecto)
+            audioSource.PlayOneShot(sonidoIncorrecto);
+
+        if (vidasActuales <= 0)
+            Invoke(nameof(GameOver), 1.2f);
+        else
+            ReiniciarRonda();
+    }
+
+    public void IncrementarPreguntasCorrectas()
+    {
+        preguntasCorrectas++;
     }
 }
