@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 517515a30b2462a488738d7979ebafe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelOpciones: {fileID: 0}
+  panelOpciones: {fileID: 350990229}
 --- !u!4 &102291018
 Transform:
   m_ObjectHideFlags: 0
@@ -518,9 +518,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 154944529}
-        m_TargetAssemblyTypeName: RegresarMenuInicial, Assembly-CSharp
-        m_MethodName: CargarMenuInicial
+      - m_Target: {fileID: 1710955836}
+        m_TargetAssemblyTypeName: MenuInicial, Assembly-CSharp
+        m_MethodName: AtrasMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -614,7 +614,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 377, y: 517}
+  m_AnchoredPosition: {x: 419, y: 873}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &207734253
@@ -1002,6 +1002,17 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &350990229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8786879114132121001, guid: 7a99185ce84e2184db8efc30e62e3fa6, type: 3}
+  m_PrefabInstance: {fileID: 1723544460}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eb696afa918f5d43aab2d0734579f7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &373575707
 GameObject:
   m_ObjectHideFlags: 0
@@ -1652,7 +1663,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -529, y: 259}
+  m_AnchoredPosition: {x: -700, y: 275.7}
   m_SizeDelta: {x: 170.45642, y: 78.099}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &677365786
@@ -2333,7 +2344,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 1011993129}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -2423,7 +2434,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -185, y: -136.75}
+  m_AnchoredPosition: {x: -461, y: -214.85}
   m_SizeDelta: {x: 170.4564, y: 78.099}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1015032520
@@ -3223,7 +3234,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 507, y: -136.75}
+  m_AnchoredPosition: {x: 13, y: -214.85}
   m_SizeDelta: {x: 170.4564, y: 78.099}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1187686624
@@ -4275,7 +4286,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 160, y: -136.75}
+  m_AnchoredPosition: {x: -218.77, y: -214.85}
   m_SizeDelta: {x: 170.4564, y: 78.099}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1531554842
@@ -4686,9 +4697,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1665154052}
-        m_TargetAssemblyTypeName: RegresarMenuInicial, Assembly-CSharp
-        m_MethodName: CargarMenuInicial
+      - m_Target: {fileID: 1710955836}
+        m_TargetAssemblyTypeName: MenuInicial, Assembly-CSharp
+        m_MethodName: AtrasMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5220,9 +5231,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1716307509}
-        m_TargetAssemblyTypeName: RegresarMenuInicial, Assembly-CSharp
-        m_MethodName: CargarMenuInicial
+      - m_Target: {fileID: 1710955836}
+        m_TargetAssemblyTypeName: MenuInicial, Assembly-CSharp
+        m_MethodName: AtrasMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

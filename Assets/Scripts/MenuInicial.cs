@@ -18,4 +18,10 @@ public class MenuInicial : MonoBehaviour
         Destroy(GameObject.FindWithTag("opciones"));
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
+
+    public void AtrasMenu()
+    {
+        Destroy(GameObject.FindWithTag("opciones"));
+        SceneManager.LoadScene("MenuInicial");
+    }
 }
