@@ -16,10 +16,10 @@ public class FloatingItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler
     {
         startPos = transform.localPosition;
 
-        if (auraObject == null)
-        {
-            CreateAura();
-        }
+        //if (auraObject == null)
+        //{
+        //    CreateAura();
+        //}
     }
 
     void Update()
@@ -31,22 +31,22 @@ public class FloatingItem : MonoBehaviour, IBeginDragHandler, IEndDragHandler
         transform.localPosition = startPos + new Vector3(0f, newY, 0f);
     }
 
-    void CreateAura()
-    {
-        auraObject = new GameObject("Aura");
-        auraObject.transform.SetParent(transform, false);
-        auraObject.transform.SetAsFirstSibling(); // Detrás
+    //void CreateAura()
+    //{
+    //    auraObject = new GameObject("Aura");
+    //    auraObject.transform.SetParent(transform, false);
+    //    auraObject.transform.SetAsFirstSibling(); // Detrás
 
-        Image auraImage = auraObject.AddComponent<Image>();
-        auraImage.color = new Color(0.5f, 0.8f, 1f, 0.3f); // Celeste más tenue
+    //    Image auraImage = auraObject.AddComponent<Image>();
+    //    auraImage.color = new Color(0.5f, 0.8f, 1f, 0.3f); // Celeste más tenue
 
-        Image thisImage = GetComponent<Image>();
-        if (thisImage != null)
-        {
-            auraImage.sprite = thisImage.sprite;
-            auraImage.rectTransform.sizeDelta = thisImage.rectTransform.sizeDelta * 1.1f; // Más delgado
-        }
-    }
+    //    Image thisImage = GetComponent<Image>();
+    //    if (thisImage != null)
+    //    {
+    //        auraImage.sprite = thisImage.sprite;
+    //        auraImage.rectTransform.sizeDelta = thisImage.rectTransform.sizeDelta * 1.1f; // Más delgado
+    //    }
+    //}
 
     public void OnBeginDrag(PointerEventData eventData)
     {

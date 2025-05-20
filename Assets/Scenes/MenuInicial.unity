@@ -1545,8 +1545,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -138}
-  m_SizeDelta: {x: 717.68115, y: 921.0642}
+  m_AnchoredPosition: {x: 109.85, y: -29}
+  m_SizeDelta: {x: 551.3989, y: 935.1555}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &590939480
 MonoBehaviour:
@@ -3963,9 +3963,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fde1a492d01f9c4d9a4dce15f38d696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroySound: {fileID: 8300000, guid: 08097e43607cf52449a96ff85e0c6c9c, type: 3}
-  destroyEffectPrefab: {fileID: 4306167161924932604, guid: e7d65df30c4a0d84596ac70c3b0ba454, type: 3}
-  conditionMet: 0
+  feedbackTexto: {fileID: 0}
+  pantallaGameOver: {fileID: 0}
+  pantallaVictoria: {fileID: 0}
+  vidasTexto: {fileID: 0}
+  timerTexto: {fileID: 0}
+  botonMenuGameOver: {fileID: 0}
+  botonMenuVictoria: {fileID: 0}
+  botonSiguienteNivel: {fileID: 0}
+  sonidoCorrecto: {fileID: 0}
+  sonidoIncorrecto: {fileID: 0}
+  sonidoVictoria: {fileID: 0}
+  sonidoDerrota: {fileID: 0}
+  vidasIniciales: 3
+  preguntasParaGanar: 5
+  tiempoPorPregunta: 20
+  preguntaSorpresa: {fileID: 0}
 --- !u!1 &1844366660
 GameObject:
   m_ObjectHideFlags: 0
