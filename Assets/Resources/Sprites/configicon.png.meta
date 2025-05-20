@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ad0e1835b39289040bd9ef20307ee165
+guid: 74ba4b689fc69b14f8b99f387cd465bc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4771789244991086169
-    second: config_0
+      213: 600949204310037565
+    second: configicon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: config_0
+      name: configicon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 533
-        height: 171
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 95e19ba490dc83240800000000000000
-      internalID: 4771789244991086169
+      spriteID: d3414fa0e10075800800000000000000
+      internalID: 600949204310037565
       vertices: []
       indices: 
       edges: []
@@ -147,7 +147,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      configicon_0: 600949204310037565
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

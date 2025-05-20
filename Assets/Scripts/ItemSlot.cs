@@ -12,6 +12,9 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public GameObject pantallaVictoria;
     public TextMeshProUGUI vidasTexto;
     public TextMeshProUGUI timerTexto;
+    public Image heart1;
+    public Image heart2;
+    public Image heart3;
 
     [Header("Botones Pantallas")]
     public Button botonMenuGameOver;
@@ -117,6 +120,25 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             {
                 vidasActuales--;
                 ActualizarVidasUI();
+
+                if (vidasActuales == 2) {
+
+                    Destroy(heart3);
+                
+                }
+                if (vidasActuales == 1)
+                {
+
+                    Destroy(heart2);
+
+                }
+
+                if (vidasActuales == 0)
+                {
+
+                    Destroy(heart1);
+
+                }
 
                 feedbackTexto.text = "Incorrecto. Intenta otra vez.";
                 feedbackTexto.color = Color.red;
