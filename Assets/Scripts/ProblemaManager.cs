@@ -1,87 +1,175 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
+using TMPro;
 
 public class ProblemaManager : MonoBehaviour
 {
-    public TextAsset archivoCSV;
+    [Header("Texto en pantalla")]
+    public TextMeshProUGUI textoProblema;
+    
+    [Header("CSV")]
+    public TextAsset csvFile;
+
+    [Header("Ingrediente Prefab")]
+    public GameObject ingredientePrefab;
+
+    [Header("Slots de Spawn")]
+    public Transform[] spawnSlots;
+
+    [Header("Sprites de Métodos")]
+    [SerializeField] private List<MetodoSprite> metodoSprites = new List<MetodoSprite>();
+
+    private List<string[]> csvData = new List<string[]>();
+    private string[] metodos;
 
     void Start()
     {
-        MostrarProblema();
+        if (csvFile != null)
+        {
+            CargarCSV();
+            MostrarProblemaYSpawn();
+        }
+        else
+        {
+            Debug.LogError("No hay archivo CSV asignado.");
+        }
     }
 
-    void MostrarProblema()
+    void CargarCSV()
     {
-        if (archivoCSV == null)
+        csvData.Clear();
+        StringReader reader = new StringReader(csvFile.text);
+        bool firstLine = true;
+
+        while (reader.Peek() > -1)
         {
-            Debug.LogError("❌ No se asignó el archivo CSV.");
+            string line = reader.ReadLine();
+            string[] values = line.Split(',');
+
+            if (firstLine)
+            {
+                metodos = values;
+                // Crear entradas en metodoSprites para cada método si no existen
+                foreach (string metodo in metodos)
+                {
+                    if (!metodoSprites.Exists(m => m.nombreMetodo == metodo))
+                    {
+                        metodoSprites.Add(new MetodoSprite { nombreMetodo = metodo, sprite = null });
+                    }
+                }
+                firstLine = false;
+            }
+            else
+            {
+                csvData.Add(values);
+            }
+        }
+    }
+
+    // Método para asignar un sprite específico a un método
+    public void AsignarSpriteAMetodo(string nombreMetodo, Sprite sprite)
+    {
+        var metodoSprite = metodoSprites.Find(m => m.nombreMetodo == nombreMetodo);
+        if (metodoSprite != null)
+        {
+            metodoSprite.sprite = sprite;
+        }
+        else
+        {
+            Debug.LogWarning($"No se encontró el método {nombreMetodo} para asignar el sprite");
+        }
+    }
+
+    // Método para obtener todos los métodos disponibles
+    public string[] ObtenerMetodosDisponibles()
+    {
+        return metodos;
+    }
+
+    public void MostrarProblemaYSpawn()
+    {
+        if (csvData.Count == 0 || metodos.Length == 0)
+        {
+            Debug.LogError("CSV no cargado correctamente.");
             return;
         }
 
-        string[] lineas = archivoCSV.text.Split(new[] { '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        int problemaIndex = Random.Range(0, csvData.Count);
+        string[] filaProblema = csvData[problemaIndex];
+        string problema = filaProblema[0];
+        textoProblema.text = problema;
 
-        if (lineas.Length < 2)
+        List<int> validos = new List<int>();
+        List<int> invalidos = new List<int>();
+
+        for (int i = 1; i < filaProblema.Length; i++)
         {
-            Debug.LogError("❌ El archivo CSV no tiene suficientes datos.");
+            if (filaProblema[i] == "1")
+                validos.Add(i);
+            else if (filaProblema[i] == "0")
+                invalidos.Add(i);
+        }
+
+        if (validos.Count == 0 || invalidos.Count < 3)
+        {
+            Debug.LogError("No hay suficientes métodos válidos o inválidos.");
             return;
         }
 
-        // Leer encabezados (métodos)
-        string[] encabezados = lineas[0].Split(',').Skip(1).ToArray();
+        int metodoValido = validos[Random.Range(0, validos.Count)];
 
-        // Guardar filas válidas (mismo número de columnas que encabezado + 1)
-        List<string[]> filasValidas = new();
-        for (int i = 1; i < lineas.Length; i++)
+        List<int> metodoInvalidos = new List<int>();
+        while (metodoInvalidos.Count < 3)
         {
-            string[] columnas = lineas[i].Split(',');
-
-            if (columnas.Length == encabezados.Length + 1)
-                filasValidas.Add(columnas);
+            int inval = invalidos[Random.Range(0, invalidos.Count)];
+            if (!metodoInvalidos.Contains(inval))
+                metodoInvalidos.Add(inval);
         }
 
-        if (filasValidas.Count == 0)
+        List<(int index, bool esCorrecto)> opciones = new List<(int, bool)>
         {
-            Debug.LogError("❌ No hay filas válidas en el CSV.");
-            return;
-        }
+            (metodoValido, true)
+        };
 
-        // Elegir una fila al azar (problema)
-        string[] fila = filasValidas[Random.Range(0, filasValidas.Count)];
-        string problemaTexto = fila[0];
+        foreach (int invalido in metodoInvalidos)
+            opciones.Add((invalido, false));
 
-        // Crear listas de métodos correctos (1) e incorrectos (0)
-        List<string> metodosCorrectos = new();
-        List<string> metodosIncorrectos = new();
-
-        for (int i = 1; i < fila.Length; i++)
-        {
-            if (fila[i].Trim() == "1")
-                metodosCorrectos.Add(encabezados[i - 1]);
-            else if (fila[i].Trim() == "0")
-                metodosIncorrectos.Add(encabezados[i - 1]);
-        }
-
-        if (metodosCorrectos.Count == 0 || metodosIncorrectos.Count < 3)
-        {
-            Debug.LogWarning("⚠️ No hay suficientes métodos correctos o incorrectos en esta fila.");
-            return;
-        }
-
-        // Escoger 1 correcto y 3 incorrectos al azar
-        string metodoCorrecto = metodosCorrectos[Random.Range(0, metodosCorrectos.Count)];
-        List<string> opciones = new List<string> { metodoCorrecto };
-        opciones.AddRange(metodosIncorrectos.OrderBy(x => Random.value).Take(3));
-
-        // Mezclar opciones
-        opciones = opciones.OrderBy(x => Random.value).ToList();
-
-        // Mostrar
-        Debug.Log("🧠 Problema: " + problemaTexto);
+        // Mezclar lista
         for (int i = 0; i < opciones.Count; i++)
         {
-            Debug.Log($"🔹 Opción {i + 1}: {opciones[i]}");
+            int rnd = Random.Range(0, opciones.Count);
+            var temp = opciones[rnd];
+            opciones[rnd] = opciones[i];
+            opciones[i] = temp;
         }
-        Debug.Log("✅ Respuesta correcta: " + metodoCorrecto);
+
+        // Instanciar ingredientes en los spawn slots
+        for (int i = 0; i < spawnSlots.Length && i < opciones.Count; i++)
+        {
+            GameObject ing = Instantiate(ingredientePrefab, spawnSlots[i]);
+            ing.transform.localPosition = Vector3.zero; // Asegura que aparezca centrado en el slot
+
+            Ingrediente ingredienteScript = ing.GetComponent<Ingrediente>();
+            if (ingredienteScript != null)
+            {
+                var (metodoIndex, esCorrecto) = opciones[i];
+                string nombreMetodo = metodos[metodoIndex];
+                
+                // Buscar el sprite correspondiente al método
+                Sprite spriteMetodo = null;
+                var metodoSprite = metodoSprites.Find(m => m.nombreMetodo == nombreMetodo);
+                if (metodoSprite != null)
+                {
+                    spriteMetodo = metodoSprite.sprite;
+                }
+                
+                ingredienteScript.SetMetodo(nombreMetodo, esCorrecto, spriteMetodo);
+            }
+            else
+            {
+                Debug.LogWarning("El prefab no tiene el script Ingrediente.");
+            }
+        }
     }
 }
