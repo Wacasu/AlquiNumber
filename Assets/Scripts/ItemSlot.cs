@@ -8,6 +8,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 {
     [Header("UI")]
     public TextMeshProUGUI feedbackTexto;
+    public TextMeshProUGUI txtPuntuacion;
     public GameObject pantallaGameOver;
     public GameObject pantallaVictoria;
     public TextMeshProUGUI vidasTexto;
@@ -34,6 +35,8 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     [Header("Pregunta Sorpresa")]
     [SerializeField] private PreguntaSorpresa preguntaSorpresa;
+
+    private int puntos=0;
 
     private int vidasActuales;
     private int preguntasCorrectas;
@@ -93,6 +96,8 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
             if (ingrediente.EsCorrecto())
             {
+                puntos = puntos + 500;
+                txtPuntuacion.text = ""+puntos;
                 feedbackTexto.text = "¡Correcto!";
                 feedbackTexto.color = Color.green;
 
@@ -114,6 +119,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             }
             else
             {
+                puntos = puntos - 100;
                 PerderVidaPorProblema();
             }
         }
