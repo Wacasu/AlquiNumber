@@ -3438,231 +3438,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1 &1159356357
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1159356358}
-  - component: {fileID: 1159356360}
-  - component: {fileID: 1159356359}
-  m_Layer: 5
-  m_Name: mng_PreguntaManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1159356358
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1159356357}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1642265794}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000061035156, y: -0.000015258789}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1159356359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1159356357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd66e7ef8df03314bbade5268ea631d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  panelPregunta: {fileID: 0}
-  imagenProblema: {fileID: 0}
-  botonesOpciones:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  textosOpciones:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  tiempoMostrarPregunta: 3
-  panelVictoria: {fileID: 0}
-  panelSiguienteNivel: {fileID: 0}
-  problemas:
-  - imagenProblema: {fileID: -7352987997885631740, guid: ff229c140b2609a4ba7a566096edd10f, type: 3}
-    opciones:
-    - H1=0.8, H2 =0.4
-    - H1=1.07, H2 =0.61
-    - H1=7.02, H2 =5.15
-    - H1=7.3, H2 =0.28
-    respuestaCorrecta: 0
-  - imagenProblema: {fileID: -7655417725245849986, guid: 70c23cffaab8f474ea3be977d26f3fb4, type: 3}
-    opciones:
-    - 'x^3+2x^2+x '
-    - 'x^4+2x^3+2x-20 '
-    - '3x^2+4x+10 '
-    - x^4/4+(2x^3)/3+x^2/2-20x
-    respuestaCorrecta: 2
-  - imagenProblema: {fileID: -4626454064213416725, guid: 8203b92be9ff3d04eb0ba7fe6010ae29, type: 3}
-    opciones:
-    - 1.411764706
-    - 1.500188591
-    - 1.699401886
-    - 1.491068311
-    respuestaCorrecta: 0
-  - imagenProblema: {fileID: -1835344096891815809, guid: 2e577ef60576f1546abcacd88f17765a, type: 3}
-    opciones:
-    - x= Lnx
-    - x=e^(-x)
-    - x=1/e^x
-    - x= -Lnx
-    respuestaCorrecta: 3
-  - imagenProblema: {fileID: 5714181171466560492, guid: 59ab98110b6959e47b43ddfb38080481, type: 3}
-    opciones:
-    - x_(i+1)
-    - x_i
-    - f(x_(i+1) )-f(x_i)
-    - f(x_i)-f(x_(i+1) )
-    respuestaCorrecta: 2
-  - imagenProblema: {fileID: -7824175819656441115, guid: 8b032acb00775c1498c78626c5ee9857, type: 3}
-    opciones:
-    - 7b
-    - 0.1b
-    - 4.5b
-    - 5b
-    respuestaCorrecta: 0
-  - imagenProblema: {fileID: 1249778097887404130, guid: 74f43b2db31a27242999f76d6fd6a669, type: 3}
-    opciones:
-    - 1.3375
-    - 0.15625
-    - -1.3375
-    - -0.15625
-    respuestaCorrecta: 0
-  - imagenProblema: {fileID: -7572667300767637496, guid: 0a8628cbec1de8141a4587acee956753, type: 3}
-    opciones:
-    - y_3\ \ ((x-x_1)(x-x_2))/((x_3-x_1)(x_3-x_2))
-    - y_3\ \ ((x_3-x_1)(x-x_2))/((x-x_1)(x_3-x_2))
-    - y_3\ \ ((x_3-x_1)(x-x_3))/((x-x_1)(x-x_2))
-    - y_3\ \ ((x_3-x_1)(x_3-x_2))/((x-x_1)(x-x_2))
-    respuestaCorrecta: 0
-  - imagenProblema: {fileID: -7685113587058188509, guid: 43076cbb4f496a74abd658d26744727c, type: 3}
-    opciones:
-    - A= 7, B= 6.2
-    - 'A=7.4, B=6.5 '
-    - A=7.1, B= 6.3
-    - 'A=7.3, B=6.9 '
-    respuestaCorrecta: 2
---- !u!82 &1159356360
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1159356357}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1 &1187686622
 GameObject:
   m_ObjectHideFlags: 0
@@ -5012,7 +4787,7 @@ RectTransform:
   - {fileID: 1087453270}
   - {fileID: 481967841}
   - {fileID: 1711772087}
-  - {fileID: 1159356358}
+  - {fileID: 2099138196}
   - {fileID: 942482143}
   - {fileID: 1454470315}
   - {fileID: 207734252}
@@ -6422,6 +6197,297 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093287532}
   m_CullTransparentMesh: 1
+--- !u!1 &2099138195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2099138196}
+  - component: {fileID: 2099138198}
+  - component: {fileID: 2099138197}
+  m_Layer: 5
+  m_Name: mng_PreguntaManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2099138196
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099138195}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1642265794}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.000061035156, y: -0.000015258789}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2099138197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099138195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd66e7ef8df03314bbade5268ea631d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panelPregunta: {fileID: 0}
+  imagenProblema: {fileID: 0}
+  botonesOpciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  textosOpciones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tiempoMostrarPregunta: 3
+  panelVictoria: {fileID: 0}
+  panelSiguienteNivel: {fileID: 0}
+  maxWidth: 1200
+  maxHeight: 900
+  padding: 20
+  problemas:
+  - imagenProblema: {fileID: -7352987997885631740, guid: ff229c140b2609a4ba7a566096edd10f, type: 3}
+    opciones:
+    - H1=0.8, H2 =0.4
+    - H1=1.07, H2 =0.61
+    - H1=7.02, H2 =5.15
+    - H1=7.3, H2 =0.28
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: -7655417725245849986, guid: 70c23cffaab8f474ea3be977d26f3fb4, type: 3}
+    opciones:
+    - 'x^3+2x^2+x '
+    - 'x^4+2x^3+2x-20 '
+    - '3x^2+4x+10 '
+    - x^4/4+(2x^3)/3+x^2/2-20x
+    respuestaCorrecta: 2
+  - imagenProblema: {fileID: -4626454064213416725, guid: 8203b92be9ff3d04eb0ba7fe6010ae29, type: 3}
+    opciones:
+    - 1.411764706
+    - 1.500188591
+    - 1.699401886
+    - 1.491068311
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: -1835344096891815809, guid: 2e577ef60576f1546abcacd88f17765a, type: 3}
+    opciones:
+    - x= Lnx
+    - x=e^(-x)
+    - x=1/e^x
+    - x= -Lnx
+    respuestaCorrecta: 3
+  - imagenProblema: {fileID: 5714181171466560492, guid: 59ab98110b6959e47b43ddfb38080481, type: 3}
+    opciones:
+    - x_(i+1)
+    - x_i
+    - f(x_(i+1) )-f(x_i)
+    - f(x_i)-f(x_(i+1) )
+    respuestaCorrecta: 2
+  - imagenProblema: {fileID: -7824175819656441115, guid: 8b032acb00775c1498c78626c5ee9857, type: 3}
+    opciones:
+    - 7b
+    - 0.1b
+    - 4.5b
+    - 5b
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: 1249778097887404130, guid: 74f43b2db31a27242999f76d6fd6a669, type: 3}
+    opciones:
+    - 1.3375
+    - 0.15625
+    - -1.3375
+    - -0.15625
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: -7685113587058188509, guid: 43076cbb4f496a74abd658d26744727c, type: 3}
+    opciones:
+    - A= 7, B= 6.2
+    - 'A=7.4, B=6.5 '
+    - A=7.1, B= 6.3
+    - 'A=7.3, B=6.9 '
+    respuestaCorrecta: 2
+  - imagenProblema: {fileID: 5417611225404767618, guid: dcd6598ed0ded0a46bb6f52ee482f247, type: 3}
+    opciones:
+    - 9
+    - 4
+    - 6
+    - 8
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: 3307192853172250831, guid: 19862b3a4d1f723479ffcebda5dcd2e5, type: 3}
+    opciones:
+    - 3
+    - 2
+    - 4
+    - 6
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: 2473169461620808154, guid: 9433a02aed4bfbb4aad23d907d8b25a0, type: 3}
+    opciones:
+    - 4
+    - 3
+    - 5
+    - 2
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: 6518170795123583097, guid: 2a40a5643e7de524dab523b5c20e9a77, type: 3}
+    opciones:
+    - 3
+    - 2
+    - 1
+    - 4
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: 8321575771487112230, guid: b53706a3e05be8b498b69f692cfea129, type: 3}
+    opciones:
+    - 2
+    - 3
+    - 1
+    - 4
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: 5074558698993509410, guid: e4e7bb20d99d131448519978c47c1baa, type: 3}
+    opciones:
+    - 4
+    - 5
+    - 6
+    - 7
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: -169086679608693339, guid: 8eeeb33039407224484adc643c6ebece, type: 3}
+    opciones:
+    - 8/3
+    - 9/3
+    - 10/3
+    - 7/3
+    respuestaCorrecta: 2
+  - imagenProblema: {fileID: -5437983839632348202, guid: 4249c603fdc20d7439be10f263d19974, type: 3}
+    opciones:
+    - 2
+    - 1.5
+    - 1
+    - 2.5
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: -2433043437261900681, guid: e2bc79a28cc1b0540b1b708c90819e68, type: 3}
+    opciones:
+    - 4
+    - 3
+    - 5
+    - 2
+    respuestaCorrecta: 0
+  - imagenProblema: {fileID: -5437983839632348202, guid: 4249c603fdc20d7439be10f263d19974, type: 3}
+    opciones:
+    - 2
+    - 4
+    - 3
+    - 1.5
+    respuestaCorrecta: 0
+--- !u!82 &2099138198
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2099138195}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

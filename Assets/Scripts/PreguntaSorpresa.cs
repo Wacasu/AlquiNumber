@@ -23,9 +23,9 @@ public class PreguntaSorpresa : MonoBehaviour
     [SerializeField] private float tiempoMostrarPregunta = 3f;
     [SerializeField] private GameObject panelVictoria;
     [SerializeField] private GameObject panelSiguienteNivel;
-    [SerializeField] private float maxWidth = 800f;  // Ancho máximo de la imagen
-    [SerializeField] private float maxHeight = 600f; // Alto máximo de la imagen
-    [SerializeField] private float padding = 20f;    // Espacio alrededor de la imagen
+    [SerializeField] private float maxWidth = 1200f;  // Aumentado de 800 a 1200
+    [SerializeField] private float maxHeight = 900f;  // Aumentado de 600 a 900
+    [SerializeField] private float padding = 30f;     // Aumentado de 20 a 30 para mejor espaciado
 
     [Header("Problemas")]
     [SerializeField] private List<ProblemaNumerico> problemas = new List<ProblemaNumerico>();
@@ -52,29 +52,19 @@ public class PreguntaSorpresa : MonoBehaviour
     {
         if (sprite == null) return;
 
+        // Configurar el componente Image
+        imagenProblema.preserveAspect = true;
+        imagenProblema.type = Image.Type.Simple;
+        
+        // Configurar el RectTransform con tamaño fijo
         RectTransform rectTransform = imagenProblema.GetComponent<RectTransform>();
-        float aspectRatio = (float)sprite.texture.width / sprite.texture.height;
-
-        // Calcular el tamaño máximo disponible
-        float availableWidth = maxWidth - (padding * 2);
-        float availableHeight = maxHeight - (padding * 2);
-
-        // Calcular el tamaño final manteniendo la proporción
-        float finalWidth, finalHeight;
-
-        if (aspectRatio > 1) // Imagen más ancha que alta
-        {
-            finalWidth = Mathf.Min(availableWidth, sprite.texture.width);
-            finalHeight = finalWidth / aspectRatio;
-        }
-        else // Imagen más alta que ancha
-        {
-            finalHeight = Mathf.Min(availableHeight, sprite.texture.height);
-            finalWidth = finalHeight * aspectRatio;
-        }
-
-        // Aplicar el tamaño
-        rectTransform.sizeDelta = new Vector2(finalWidth, finalHeight);
+        rectTransform.sizeDelta = new Vector2(650f, 300f);
+        
+        // Centrar la imagen
+        rectTransform.anchorMin = new Vector2(0.5f, 0.5f);
+        rectTransform.anchorMax = new Vector2(0.5f, 0.5f);
+        rectTransform.pivot = new Vector2(0.5f, 0.5f);
+        rectTransform.anchoredPosition = Vector2.zero;
     }
 
     public void MostrarPreguntaSorpresa()
@@ -110,46 +100,45 @@ public class PreguntaSorpresa : MonoBehaviour
         
         imagenProblema.sprite = problemaActual.imagenProblema;
         AjustarTamañoImagen(problemaActual.imagenProblema);
-        respuestaCorrecta = problemaActual.respuestaCorrecta;
 
-        // Crear array temporal para las opciones mezcladas
-        string[] opcionesMezcladas = new string[4];
-        int[] posiciones = new int[4];
+        // Guardar la respuesta correcta original
+        string respuestaCorrectaOriginal = problemaActual.opciones[problemaActual.respuestaCorrecta];
         
-        // Inicializar posiciones
-        for (int i = 0; i < 4; i++)
+        // Crear lista de opciones incorrectas
+        List<string> opcionesIncorrectas = new List<string>();
+        for (int i = 0; i < problemaActual.opciones.Length; i++)
         {
-            posiciones[i] = i;
+            if (i != problemaActual.respuestaCorrecta)
+            {
+                opcionesIncorrectas.Add(problemaActual.opciones[i]);
+            }
         }
 
-        // Mezclar posiciones
-        for (int i = posiciones.Length - 1; i > 0; i--)
+        // Mezclar las opciones incorrectas
+        for (int i = opcionesIncorrectas.Count - 1; i > 0; i--)
         {
             int j = Random.Range(0, i + 1);
-            int temp = posiciones[i];
-            posiciones[i] = posiciones[j];
-            posiciones[j] = temp;
+            string temp = opcionesIncorrectas[i];
+            opcionesIncorrectas[i] = opcionesIncorrectas[j];
+            opcionesIncorrectas[j] = temp;
         }
 
-        // Asignar opciones a las posiciones mezcladas
-        for (int i = 0; i < 4; i++)
-        {
-            opcionesMezcladas[posiciones[i]] = problemaActual.opciones[i];
-        }
-
-        // Asignar opciones mezcladas a los botones
+        // Elegir posición aleatoria para la respuesta correcta
+        int posicionCorrecta = Random.Range(0, 4);
+        
+        // Asignar opciones a los botones
+        int indiceIncorrectas = 0;
         for (int i = 0; i < botonesOpciones.Length; i++)
         {
-            textosOpciones[i].text = opcionesMezcladas[i];
-        }
-
-        // Actualizar el índice de la respuesta correcta según la nueva posición
-        for (int i = 0; i < 4; i++)
-        {
-            if (posiciones[i] == respuestaCorrecta)
+            if (i == posicionCorrecta)
             {
+                textosOpciones[i].text = respuestaCorrectaOriginal;
                 respuestaCorrecta = i;
-                break;
+            }
+            else
+            {
+                textosOpciones[i].text = opcionesIncorrectas[indiceIncorrectas];
+                indiceIncorrectas++;
             }
         }
     }
