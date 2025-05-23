@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class ItemSlot : MonoBehaviour, IDropHandler
 {
+
     [Header("UI")]
     public TextMeshProUGUI feedbackTexto;
     public TextMeshProUGUI txtPuntuacion;
@@ -35,6 +36,10 @@ public class ItemSlot : MonoBehaviour, IDropHandler
 
     [Header("Pregunta Sorpresa")]
     [SerializeField] private PreguntaSorpresa preguntaSorpresa;
+
+    [Header("Pregunta Problema")]
+    [SerializeField] private PreguntaProblema preguntaProblema;
+
 
     private int puntos=0;
 
@@ -119,8 +124,15 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             }
             else
             {
-                puntos = puntos - 100;
-                PerderVidaPorProblema();
+                if (preguntaProblema != null)
+                {
+                    preguntaProblema.MostrarPreguntaProblema();
+                }
+                else
+                {
+                    PerderVidaPorProblema();
+                }
+                
             }
         }
     }
