@@ -160,9 +160,8 @@ public class PreguntaSorpresa : MonoBehaviour
             if (itemSlot != null)
             {
                 itemSlot.IncrementarPreguntasCorrectas();
+                itemSlot.ContinuarDespuesDePreguntaCorrecta();
             }
-
-            ManejarRespuestaCorrecta();
         }
         else
         {
@@ -173,17 +172,13 @@ public class PreguntaSorpresa : MonoBehaviour
             {
                 itemSlot.PerderVida();
             }
-            
-            Invoke("OcultarPanel", tiempoMostrarPregunta);
         }
+        
+        Invoke("OcultarPanel", tiempoMostrarPregunta);
     }
 
     private void ManejarRespuestaCorrecta()
     {
-        if (itemSlot != null)
-        {
-            itemSlot.ContinuarDespuesDePreguntaCorrecta();
-        }
         OcultarPanel();
     }
 
@@ -192,6 +187,7 @@ public class PreguntaSorpresa : MonoBehaviour
         if (panelPregunta != null)
         {
             panelPregunta.SetActive(false);
+            preguntaRespondida = false;
         }
     }
 } 

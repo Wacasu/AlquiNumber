@@ -204,6 +204,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
     public void ReanudarJuego()
     {
         Time.timeScale = 1f;
+        juegoActivo = true;
         ReiniciarRonda();
     }
 
@@ -235,6 +236,10 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         }
         else
         {
+            feedbackTexto.text = "Incorrecto. Intenta otra vez.";
+            feedbackTexto.color = Color.red;
+            if (audioSource && sonidoIncorrecto)
+                audioSource.PlayOneShot(sonidoIncorrecto);
             ReanudarJuego();
         }
     }
@@ -252,9 +257,13 @@ public class ItemSlot : MonoBehaviour, IDropHandler
             audioSource.PlayOneShot(sonidoIncorrecto);
 
         if (vidasActuales <= 0)
-            Invoke(nameof(GameOver), 1.2f);
+        {
+            GameOver();
+        }
         else
-            ReiniciarRonda();
+        {
+            ReanudarJuego();
+        }
     }
 
     public void IncrementarPreguntasCorrectas()
