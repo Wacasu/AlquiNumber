@@ -1,0 +1,24 @@
+===========================================
+PLAYERPROGRESS - Sistema de Progreso del Jugador
+===========================================
+
+DESCRIPCIÓN:
+Guarda y gestiona el progreso del jugador de forma persistente.
+Utiliza el patrón Singleton para mantener una única instancia durante 
+todo el juego. Los datos se guardan automáticamente y persisten entre 
+sesiones.
+
+FUNCIONALIDADES:
+- Guarda niveles desbloqueados
+- Guarda puntos de experiencia (XP)
+- Desbloquea nuevos niveles automáticamente
+- Carga progreso al iniciar el juego
+- Guarda progreso después de cada acción importante
+
+ARCHIVO: PlayerProgress.cs
+
+UBICACIÓN: Assets/Scripts/PlayerProgress.cs
+
+PATRÓN: Singleton
+ACCESO: PlayerProgress.Instance (desde cualquier clase)
+

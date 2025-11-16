@@ -1,0 +1,24 @@
+===========================================
+PROBLEMAMANAGER - Gestor de Problemas y Preguntas
+===========================================
+
+DESCRIPCIÓN:
+Es el núcleo del sistema de juego. Lee problemas desde un archivo CSV,
+selecciona problemas aleatoriamente y genera preguntas con opciones 
+múltiples para el jugador.
+
+FUNCIONALIDADES:
+- Lee problemas desde archivo CSV
+- Selecciona un problema aleatorio
+- Genera 4 opciones (1 correcta + 3 incorrectas)
+- Mezcla las opciones aleatoriamente
+- Muestra el problema y opciones al jugador
+
+ARCHIVO: ProblemaManager.cs
+
+UBICACIÓN: Assets/Scripts/ProblemaManager.cs
+
+FORMATO CSV:
+Primera fila: Encabezados (Puzzle, EjercicioMatematico, Memorama)
+Filas siguientes: Problema, seguido de 1 (correcto) o 0 (incorrecto)
+

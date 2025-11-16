@@ -1,0 +1,23 @@
+===========================================
+DRAGDROP - Sistema de Arrastrar y Soltar
+===========================================
+
+DESCRIPCIÓN:
+Permite que el jugador arrastre elementos de la interfaz con el mouse 
+o touch. Proporciona feedback visual durante el arrastre (el elemento 
+se vuelve semi-transparente).
+
+FUNCIONALIDADES:
+- Detecta cuando el jugador presiona sobre un elemento
+- Permite arrastrar el elemento siguiendo el movimiento del mouse/touch
+- Hace el elemento semi-transparente durante el arrastre
+- Restaura apariencia normal al soltar
+- Interactúa con ItemSlot cuando se suelta un elemento
+
+ARCHIVO: DragDrop.cs
+
+UBICACIÓN: Assets/Scripts/DragDrop.cs
+
+INTERFACES:
+Implementa interfaces de Unity Event System para manejar eventos de arrastre.
+

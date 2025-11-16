@@ -1,0 +1,28 @@
+===========================================
+INGREDIENTE - Componente de Elemento Interactivo
+===========================================
+
+DESCRIPCIÓN:
+Representa un elemento que puede ser arrastrado en el juego (por ejemplo,
+una opción de respuesta, una pieza de puzzle, etc.). Almacena información
+sobre el elemento y su tipo de juego asociado.
+
+FUNCIONALIDADES:
+- Almacena nombre del elemento
+- Almacena tipo de juego asignado (Puzzle, EjercicioMatematico, Memorama)
+- Se puede arrastrar usando DragDrop
+- Se puede validar en ItemSlot
+
+ARCHIVO: Ingrediente.cs
+
+UBICACIÓN: Assets/Scripts/Ingrediente.cs
+
+ATRIBUTOS:
+- nombreIngrediente: Nombre visible del elemento
+- metodoAsignado: Tipo de juego (enum MetodoNumerico)
+
+RELACIONES:
+- Usa enum MetodoNumerico para definir tipo
+- Compatible con DragDrop para arrastre
+- Validable por ItemSlot
+

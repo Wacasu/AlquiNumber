@@ -1,0 +1,24 @@
+===========================================
+ITEMSLOT - Zona de Soltado y Validación
+===========================================
+
+DESCRIPCIÓN:
+Define áreas específicas donde el jugador puede soltar elementos 
+arrastrados. Valida si la acción es correcta y proporciona feedback 
+visual y auditivo.
+
+FUNCIONALIDADES:
+- Detecta cuando un elemento se suelta sobre esta zona
+- Reproduce sonido al soltar un elemento
+- Muestra efecto visual (partículas, animación)
+- Valida si la respuesta es correcta
+- Activa condición lógica (conditionMet) cuando se completa
+
+ARCHIVO: ItemSlot.cs
+
+UBICACIÓN: Assets/Scripts/ItemSlot.cs
+
+RELACIONES:
+- Recibe elementos de DragDrop
+- Puede validar elementos Ingrediente
+

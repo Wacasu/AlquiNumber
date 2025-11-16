@@ -1,0 +1,221 @@
+DIAGRAMA DE CLASES - JUEGO "ALQUINUMBER"
+
+===========================================
+CLASES Y SUS MIEMBROS
+===========================================
+
+1. MenuInicial
+   Atributos:
+   - (ninguno público)
+   
+   Métodos:
+   - jugar(): void - Carga la siguiente escena e inicia el juego
+   - salir(): void - Cierra la aplicación completamente
+   - atras(): void - Regresa a la escena anterior
+
+
+2. LevelMenuController
+   Atributos:
+   - levelButtons: Button[] - Array de botones de niveles
+   - maxLevelUnlocked: int - Número máximo de niveles desbloqueados
+   
+   Métodos:
+   - Start(): void - Inicializa botones según niveles desbloqueados
+   - LoadLevel(levelIndex: int): void - Carga la escena del nivel seleccionado
+
+
+3. PlayerProgress
+   Atributos:
+   - Instance: PlayerProgress (static) - Instancia única del Singleton
+   - nivelMaxDesbloqueado: int - Nivel máximo desbloqueado por el jugador
+   - experiencia: int - Puntos de experiencia acumulados
+   
+   Métodos:
+   - Awake(): void - Inicializa Singleton y carga progreso
+   - GanarExperiencia(cantidad: int): void - Aumenta experiencia y guarda
+   - DesbloquearNivel(nivel: int): void - Desbloquea nuevo nivel y guarda
+   - GuardarProgreso(): void - Guarda datos en PlayerPrefs
+   - CargarProgreso(): void - Carga datos desde PlayerPrefs
+
+
+4. ProblemaManager
+   Atributos:
+   - archivoCSV: TextAsset - Archivo CSV con problemas y soluciones
+   
+   Métodos:
+   - Start(): void - Inicializa y muestra problema al cargar
+   - MostrarProblema(): void - Carga CSV, selecciona problema aleatorio, genera opciones
+
+
+5. DragDrop
+   Atributos:
+   - canvas: Canvas (private) - Canvas de referencia para cálculos
+   - rectTransform: RectTransform (private) - Transform del elemento
+   - canvasGroup: CanvasGroup (private) - Grupo para control de transparencia
+   
+   Métodos:
+   - Awake(): void - Inicializa componentes necesarios
+   - OnBeginDrag(eventData: PointerEventData): void - Inicia arrastre, hace transparente
+   - OnDrag(eventData: PointerEventData): void - Actualiza posición durante arrastre
+   - OnEndDrag(eventData: PointerEventData): void - Termina arrastre, restaura apariencia
+   - OnPointerDown(eventData: PointerEventData): void - Detecta click inicial
+
+
+6. ItemSlot
+   Atributos:
+   - destroySound: AudioClip - Sonido al soltar elemento
+   - destroyEffectPrefab: GameObject - Efecto visual al soltar
+   - conditionMet: bool - Indica si se completó la acción correctamente
+   
+   Métodos:
+   - OnDrop(eventData: PointerEventData): void - Valida elemento soltado, reproduce sonido y efecto
+
+
+7. Opciones (Ingrediente.cs)
+   Atributos:
+   - nombreIngrediente: string - Nombre visible de la opción
+   - metodoAsignado: MetodoNumerico - Tipo de juego asignado (enum)
+   
+   Métodos:
+   - (ninguno - clase de datos)
+
+
+===========================================
+RELACIONES ENTRE CLASES
+===========================================
+
+1. MenuInicial → LevelMenuController
+   Tipo: Asociación unidireccional
+   Etiqueta: "navega a"
+   Descripción: MenuInicial navega hacia LevelMenuController al presionar "Jugar"
+
+2. LevelMenuController → PlayerProgress
+   Tipo: Asociación unidireccional
+   Etiqueta: "consulta"
+   Descripción: LevelMenuController debería consultar PlayerProgress.Instance para obtener niveles desbloqueados
+
+3. ProblemaManager → TextAsset (archivoCSV)
+   Tipo: Asociación unidireccional
+   Etiqueta: "lee"
+   Descripción: ProblemaManager lee problemas desde el archivo CSV
+
+4. DragDrop → ItemSlot
+   Tipo: Asociación unidireccional
+   Etiqueta: "arrastra a"
+   Descripción: DragDrop envía elementos arrastrados hacia ItemSlot cuando se suelta
+
+5. Opciones → DragDrop
+   Tipo: Asociación unidireccional
+   Etiqueta: "usa"
+   Descripción: Opciones utiliza el componente DragDrop para poder ser arrastrada
+
+6. ItemSlot → Opciones
+   Tipo: Asociación unidireccional
+   Etiqueta: "valida"
+   Descripción: ItemSlot valida las Opciones cuando se soltan sobre él
+
+7. ProblemaManager → Opciones
+   Tipo: Asociación unidireccional (implícita)
+   Etiqueta: "genera"
+   Descripción: ProblemaManager genera instancias de Opciones con las respuestas posibles
+
+8. JuegoMatematico (implícito) → PlayerProgress
+   Tipo: Asociación unidireccional
+   Etiqueta: "actualiza"
+   Descripción: Al completar problemas, se actualiza PlayerProgress con experiencia y desbloqueos
+
+
+===========================================
+ESTRUCTURA DEL DIAGRAMA UML
+===========================================
+
+Agrupación sugerida:
+
+[Paquete: Interfaz y Navegación]
+- MenuInicial
+- LevelMenuController
+
+[Paquete: Sistema de Progreso]
+- PlayerProgress (Singleton)
+
+[Paquete: Lógica de Juego]
+- ProblemaManager
+
+[Paquete: Sistema Interactivo]
+- DragDrop
+- ItemSlot
+- Opciones
+
+===========================================
+DIAGRAMA SIMPLIFICADO EN TEXTO
+===========================================
+
+MenuInicial
+├─ jugar(): void
+├─ salir(): void
+└─ atras(): void
+    │
+    │ navega a
+    ↓
+LevelMenuController
+├─ levelButtons: Button[]
+├─ maxLevelUnlocked: int
+├─ Start(): void
+└─ LoadLevel(levelIndex: int): void
+    ↑
+    │ consulta
+    │
+PlayerProgress (Singleton)
+├─ Instance: static PlayerProgress
+├─ nivelMaxDesbloqueado: int
+├─ experiencia: int
+├─ GanarExperiencia(cantidad: int): void
+├─ DesbloquearNivel(nivel: int): void
+├─ GuardarProgreso(): void
+└─ CargarProgreso(): void
+
+ProblemaManager
+├─ archivoCSV: TextAsset
+├─ Start(): void
+└─ MostrarProblema(): void
+    │
+    │ genera
+    ↓
+Opciones
+├─ nombreIngrediente: string
+└─ metodoAsignado: MetodoNumerico
+    │
+    │ usa ────┐
+    │         │
+    ↓         │
+DragDrop     │
+├─ canvas: Canvas        │
+├─ rectTransform: RectTransform
+├─ canvasGroup: CanvasGroup
+├─ OnBeginDrag(): void
+├─ OnDrag(): void
+├─ OnEndDrag(): void
+└─ OnPointerDown(): void
+    │
+    │ arrastra a
+    ↓
+ItemSlot
+├─ destroySound: AudioClip
+├─ destroyEffectPrefab: GameObject
+├─ conditionMet: bool
+└─ OnDrop(): void
+    ↑
+    │ valida
+    │
+    └─── Opciones
+
+===========================================
+NOTAS ADICIONALES
+===========================================
+
+- PlayerProgress utiliza patrón Singleton para mantener una única instancia
+- DragDrop implementa interfaces de Unity Event System (IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler)
+- ItemSlot implementa IDropHandler de Unity Event System
+- ProblemaManager genera 4 opciones (1 correcta + 3 incorrectas) desde CSV
+- El sistema de guardado usa PlayerPrefs de Unity para persistencia
+

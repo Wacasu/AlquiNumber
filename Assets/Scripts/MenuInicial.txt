@@ -1,0 +1,16 @@
+===========================================
+MENUINICIAL - Controlador del Menú Principal
+===========================================
+
+DESCRIPCIÓN:
+Controla el menú inicial del juego. Gestiona los botones principales 
+para iniciar el juego o salir de la aplicación.
+
+FUNCIONALIDADES:
+- Botón "Jugar": Carga la siguiente escena y comienza el juego
+- Botón "Salir": Cierra la aplicación completamente
+
+ARCHIVO: MenuInicial.cs
+
+UBICACIÓN: Assets/Scripts/MenuInicial.cs
+

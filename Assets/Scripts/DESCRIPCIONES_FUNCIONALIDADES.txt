@@ -1,0 +1,139 @@
+1. MENUINICIAL - Controlador del Menú Principal
+
+DESCRIPCIÓN:
+Controla el menú inicial del juego. Gestiona los botones principales para iniciar el juego o salir de la aplicación.
+
+FUNCIONALIDADES:
+- Botón "Jugar": Carga la siguiente escena y comienza el juego
+- Botón "Salir": Cierra la aplicación completamente
+
+ARCHIVO: MenuInicial.cs
+UBICACIÓN: Assets/Scripts/MenuInicial.cs
+
+
+2. LEVELMENUCONTROLLER - Controlador de Selección de Niveles
+
+DESCRIPCIÓN:
+Gestiona la pantalla donde el jugador selecciona qué nivel quiere jugar. Controla qué niveles están desbloqueados y cuáles están bloqueados.
+
+FUNCIONALIDADES:
+- Muestra botones de niveles disponibles
+- Habilita solo niveles desbloqueados
+- Deshabilita niveles bloqueados (se ven en gris)
+- Carga la escena del nivel seleccionado
+
+ARCHIVO: LevelMenuController.cs
+UBICACIÓN: Assets/Scripts/LevelMenuController.cs
+
+RELACIONES:
+- Debería consultar PlayerProgress para saber qué niveles están desbloqueados
+
+
+3. PLAYERPROGRESS - Sistema de Progreso del Jugador
+
+DESCRIPCIÓN:
+Guarda y gestiona el progreso del jugador de forma persistente. Utiliza el patrón Singleton para mantener una única instancia durante todo el juego. Los datos se guardan automáticamente y persisten entre sesiones.
+
+FUNCIONALIDADES:
+- Guarda niveles desbloqueados
+- Guarda puntos de experiencia (XP)
+- Desbloquea nuevos niveles automáticamente
+- Carga progreso al iniciar el juego
+- Guarda progreso después de cada acción importante
+
+ARCHIVO: PlayerProgress.cs
+UBICACIÓN: Assets/Scripts/PlayerProgress.cs
+
+PATRÓN: Singleton
+ACCESO: PlayerProgress.Instance (desde cualquier clase)
+
+
+4. PROBLEMAMANAGER - Gestor de Problemas y Preguntas
+
+DESCRIPCIÓN:
+Es el núcleo del sistema de juego. Lee problemas desde un archivo CSV, selecciona problemas aleatoriamente y genera preguntas con opciones múltiples para el jugador.
+
+FUNCIONALIDADES:
+- Lee problemas desde archivo CSV
+- Selecciona un problema aleatorio
+- Genera 4 opciones (1 correcta + 3 incorrectas)
+- Mezcla las opciones aleatoriamente
+- Muestra el problema y opciones al jugador
+
+ARCHIVO: ProblemaManager.cs
+UBICACIÓN: Assets/Scripts/ProblemaManager.cs
+
+FORMATO CSV:
+Primera fila: Encabezados (Puzzle, EjercicioMatematico, Memorama)
+Filas siguientes: Problema, seguido de 1 (correcto) o 0 (incorrecto)
+
+
+5. DRAGDROP - Sistema de Arrastrar y Soltar
+
+DESCRIPCIÓN:
+Permite que el jugador arrastre elementos de la interfaz con el mouse o touch. Proporciona feedback visual durante el arrastre (el elemento se vuelve semi-transparente).
+
+FUNCIONALIDADES:
+- Detecta cuando el jugador presiona sobre un elemento
+- Permite arrastrar el elemento siguiendo el movimiento del mouse/touch
+- Hace el elemento semi-transparente durante el arrastre
+- Restaura apariencia normal al soltar
+- Interactúa con ItemSlot cuando se suelta un elemento
+
+ARCHIVO: DragDrop.cs
+UBICACIÓN: Assets/Scripts/DragDrop.cs
+
+INTERFACES:
+Implementa interfaces de Unity Event System para manejar eventos de arrastre.
+
+
+6. ITEMSLOT - Zona de Soltado y Validación
+
+DESCRIPCIÓN:
+Define áreas específicas donde el jugador puede soltar elementos arrastrados. Valida si la acción es correcta y proporciona feedback visual y auditivo.
+
+FUNCIONALIDADES:
+- Detecta cuando un elemento se suelta sobre esta zona
+- Reproduce sonido al soltar un elemento
+- Muestra efecto visual (partículas, animación)
+- Valida si la respuesta es correcta
+- Activa condición lógica (conditionMet) cuando se completa
+
+ARCHIVO: ItemSlot.cs
+UBICACIÓN: Assets/Scripts/ItemSlot.cs
+
+RELACIONES:
+- Recibe elementos de DragDrop
+- Puede validar elementos Opciones
+
+
+7. OPCIONES - Componente de Opción de Respuesta
+
+DESCRIPCIÓN:
+Representa una opción de respuesta que puede ser arrastrada en el juego. Almacena información sobre la opción y su tipo de juego asociado.
+
+FUNCIONALIDADES:
+- Almacena nombre de la opción
+- Almacena tipo de juego asignado (Puzzle, EjercicioMatematico, Memorama)
+- Se puede arrastrar usando DragDrop
+- Se puede validar en ItemSlot
+
+ARCHIVO: Ingrediente.cs (representa opciones de respuesta)
+UBICACIÓN: Assets/Scripts/Ingrediente.cs
+
+ATRIBUTOS:
+- nombreIngrediente: Nombre visible de la opción
+- metodoAsignado: Tipo de juego asignado
+
+RELACIONES:
+- Compatible con DragDrop para arrastre
+- Validable por ItemSlot
+
+
+RESUMEN DE RELACIONES
+
+PlayerProgress (Singleton) consulta LevelMenuController
+
+DragDrop arrastra a ItemSlot
+
+Opciones usa DragDrop y se valida en ItemSlot

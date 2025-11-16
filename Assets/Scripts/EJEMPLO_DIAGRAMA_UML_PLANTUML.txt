@@ -1,0 +1,70 @@
+@startuml
+!theme plain
+
+' ==========================================
+' DIAGRAMA UML SIMPLE - ALQUINUMBER
+' Solo Funcionalidades Principales
+' ==========================================
+
+package "Navegación" {
+  class MenuInicial {
+    + Jugar()
+    + Salir()
+  }
+  
+  class LevelMenuController {
+    - levelButtons[]
+    + LoadLevel(int)
+  }
+}
+
+package "Progreso" {
+  class PlayerProgress <<Singleton>> {
+    + {static} Instance
+    - nivelMaxDesbloqueado
+    - experiencia
+    + GanarExperiencia(int)
+    + DesbloquearNivel(int)
+  }
+}
+
+package "Juego" {
+  class ProblemaManager {
+    - archivoCSV
+    + MostrarProblema()
+  }
+}
+
+package "Drag & Drop" {
+  class DragDrop {
+    + OnBeginDrag()
+    + OnDrag()
+    + OnEndDrag()
+  }
+  
+  class ItemSlot {
+    - conditionMet
+    + OnDrop()
+  }
+  
+  class Ingrediente {
+    - nombreIngrediente
+    - metodoAsignado
+  }
+  
+  enum MetodoNumerico {
+    Biseccion
+    NewtonRaphson
+    Secante
+    GaussJordan
+    ...
+  }
+}
+
+' Relaciones principales
+PlayerProgress --> LevelMenuController : consulta
+DragDrop --> ItemSlot : arrastra a
+ItemSlot --> Ingrediente : valida
+Ingrediente --> MetodoNumerico : usa
+
+@enduml

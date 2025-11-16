@@ -1,0 +1,21 @@
+===========================================
+LEVELMENUCONTROLLER - Controlador de Selección de Niveles
+===========================================
+
+DESCRIPCIÓN:
+Gestiona la pantalla donde el jugador selecciona qué nivel quiere jugar.
+Controla qué niveles están desbloqueados y cuáles están bloqueados.
+
+FUNCIONALIDADES:
+- Muestra botones de niveles disponibles
+- Habilita solo niveles desbloqueados
+- Deshabilita niveles bloqueados (se ven en gris)
+- Carga la escena del nivel seleccionado
+
+ARCHIVO: LevelMenuController.cs
+
+UBICACIÓN: Assets/Scripts/LevelMenuController.cs
+
+RELACIONES:
+- Debería consultar PlayerProgress para saber qué niveles están desbloqueados
+

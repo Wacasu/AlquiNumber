@@ -1,0 +1,34 @@
+===========================================
+METODONUMERICO - Enumeración de Tipos de Juego
+===========================================
+
+DESCRIPCIÓN:
+Define los tipos de juegos de destreza disponibles en el sistema.
+Actualmente contiene métodos numéricos, pero debería actualizarse para
+reflejar los nuevos tipos: Puzzles, Ejercicios Matemáticos y Memorama.
+
+VALORES ACTUALES:
+- Biseccion
+- NewtonRaphson
+- Secante
+- GaussJordan
+- GaussSeidel
+- EliminacionGaussiana
+- Euler
+- RungeKutta
+- InterpolacionLagrange
+- MinimosCuadrados
+
+ARCHIVO: MetodoNumericoSelector.cs
+
+UBICACIÓN: Assets/Scripts/MetodoNumericoSelector.cs
+
+USADO POR:
+- Ingrediente (para asignar tipo de juego)
+
+NOTA:
+Este enum necesita actualizarse a TipoJuego con valores:
+- Puzzle
+- EjercicioMatematico
+- Memorama
+
