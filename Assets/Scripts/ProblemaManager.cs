@@ -7,6 +7,7 @@ public class ProblemaManager : MonoBehaviour
 {
     [Header("Texto en pantalla")]
     public TextMeshProUGUI textoProblema;
+    public TextMeshProUGUI textoTema;
     
     [Header("CSV")]
     public TextAsset csvFile;
@@ -17,11 +18,9 @@ public class ProblemaManager : MonoBehaviour
     [Header("Slots de Spawn")]
     public Transform[] spawnSlots;
 
-    [Header("Sprites de Métodos")]
-    [SerializeField] private List<MetodoSprite> metodoSprites = new List<MetodoSprite>();
-
+    // Estructura del CSV: Problema, Tema, A, B, C, D, Respuesta correcta
     private List<string[]> csvData = new List<string[]>();
-    private string[] metodos;
+    private string[] problemaActual; // Almacena el problema actual siendo mostrado
 
     void Start()
     {
@@ -45,97 +44,106 @@ public class ProblemaManager : MonoBehaviour
         while (reader.Peek() > -1)
         {
             string line = reader.ReadLine();
-            string[] values = line.Split(',');
+            // Manejar casos donde las comas pueden estar dentro de campos con comillas
+            string[] values = ParseCSVLine(line);
 
             if (firstLine)
             {
-                metodos = values;
-                // Crear entradas en metodoSprites para cada método si no existen
-                foreach (string metodo in metodos)
-                {
-                    if (!metodoSprites.Exists(m => m.nombreMetodo == metodo))
-                    {
-                        metodoSprites.Add(new MetodoSprite { nombreMetodo = metodo, sprite = null });
-                    }
-                }
+                // Ignorar la línea de encabezados
                 firstLine = false;
             }
             else
             {
-                csvData.Add(values);
+                // Verificar que la fila tenga al menos 7 columnas (Problema, Tema, A, B, C, D, Respuesta correcta)
+                if (values.Length >= 7)
+                {
+                    csvData.Add(values);
+                }
+                else
+                {
+                    Debug.LogWarning($"Fila con formato incorrecto ignorada: {line}");
+                }
             }
         }
     }
 
-    // Método para asignar un sprite específico a un método
-    public void AsignarSpriteAMetodo(string nombreMetodo, Sprite sprite)
+    // Método auxiliar para parsear líneas CSV considerando comillas
+    private string[] ParseCSVLine(string line)
     {
-        var metodoSprite = metodoSprites.Find(m => m.nombreMetodo == nombreMetodo);
-        if (metodoSprite != null)
-        {
-            metodoSprite.sprite = sprite;
-        }
-        else
-        {
-            Debug.LogWarning($"No se encontró el método {nombreMetodo} para asignar el sprite");
-        }
-    }
+        List<string> result = new List<string>();
+        bool dentroDeComillas = false;
+        string campoActual = "";
 
-    // Método para obtener todos los métodos disponibles
-    public string[] ObtenerMetodosDisponibles()
-    {
-        return metodos;
+        for (int i = 0; i < line.Length; i++)
+        {
+            char c = line[i];
+
+            if (c == '"')
+            {
+                dentroDeComillas = !dentroDeComillas;
+            }
+            else if (c == ',' && !dentroDeComillas)
+            {
+                result.Add(campoActual.Trim());
+                campoActual = "";
+            }
+            else
+            {
+                campoActual += c;
+            }
+        }
+        result.Add(campoActual.Trim()); // Agregar el último campo
+
+        return result.ToArray();
     }
 
     public void MostrarProblemaYSpawn()
     {
-        if (csvData.Count == 0 || metodos.Length == 0)
+        if (csvData.Count == 0)
         {
-            Debug.LogError("CSV no cargado correctamente.");
+            Debug.LogError("CSV no cargado correctamente o está vacío.");
             return;
         }
 
+        // Seleccionar un problema aleatorio
         int problemaIndex = Random.Range(0, csvData.Count);
-        string[] filaProblema = csvData[problemaIndex];
-        string problema = filaProblema[0];
-        textoProblema.text = problema;
+        problemaActual = csvData[problemaIndex];
 
-        List<int> validos = new List<int>();
-        List<int> invalidos = new List<int>();
-
-        for (int i = 1; i < filaProblema.Length; i++)
+        // Verificar que el problema tenga el formato correcto
+        if (problemaActual.Length < 7)
         {
-            if (filaProblema[i] == "1")
-                validos.Add(i);
-            else if (filaProblema[i] == "0")
-                invalidos.Add(i);
-        }
-
-        if (validos.Count == 0 || invalidos.Count < 3)
-        {
-            Debug.LogError("No hay suficientes métodos válidos o inválidos.");
+            Debug.LogError($"Problema con formato incorrecto: {string.Join(",", problemaActual)}");
             return;
         }
 
-        int metodoValido = validos[Random.Range(0, validos.Count)];
+        // Columna 0: Problema, Columna 1: Tema, Columna 2-5: A-D, Columna 6: Respuesta correcta
+        string problema = problemaActual[0];
+        string tema = problemaActual[1];
+        string respuestaA = problemaActual[2];
+        string respuestaB = problemaActual[3];
+        string respuestaC = problemaActual[4];
+        string respuestaD = problemaActual[5];
+        string respuestaCorrecta = problemaActual[6].Trim().ToUpper(); // A, B, C, o D
 
-        List<int> metodoInvalidos = new List<int>();
-        while (metodoInvalidos.Count < 3)
+        // Mostrar el problema en pantalla
+        textoProblema.text = problema;
+        
+        // Mostrar el tema del problema en pantalla
+        if (textoTema != null)
         {
-            int inval = invalidos[Random.Range(0, invalidos.Count)];
-            if (!metodoInvalidos.Contains(inval))
-                metodoInvalidos.Add(inval);
+            textoTema.text = $"Tema: {tema}";
         }
 
-        List<(int index, bool esCorrecto)> opciones = new List<(int, bool)>
+        // Crear lista de opciones con su letra y texto
+        List<(string letra, string texto, bool esCorrecto)> opciones = new List<(string, string, bool)>
         {
-            (metodoValido, true)
+            ("A", respuestaA, respuestaCorrecta == "A"),
+            ("B", respuestaB, respuestaCorrecta == "B"),
+            ("C", respuestaC, respuestaCorrecta == "C"),
+            ("D", respuestaD, respuestaCorrecta == "D")
         };
 
-        foreach (int invalido in metodoInvalidos)
-            opciones.Add((invalido, false));
-
-        // Mezclar lista
+        // Mezclar las opciones para que no siempre aparezcan en el mismo orden
         for (int i = 0; i < opciones.Count; i++)
         {
             int rnd = Random.Range(0, opciones.Count);
@@ -148,28 +156,26 @@ public class ProblemaManager : MonoBehaviour
         for (int i = 0; i < spawnSlots.Length && i < opciones.Count; i++)
         {
             GameObject ing = Instantiate(ingredientePrefab, spawnSlots[i]);
-            ing.transform.localPosition = Vector3.zero; // Asegura que aparezca centrado en el slot
+            ing.transform.localPosition = Vector3.zero;
 
             Ingrediente ingredienteScript = ing.GetComponent<Ingrediente>();
             if (ingredienteScript != null)
             {
-                var (metodoIndex, esCorrecto) = opciones[i];
-                string nombreMetodo = metodos[metodoIndex];
-                
-                // Buscar el sprite correspondiente al método
-                Sprite spriteMetodo = null;
-                var metodoSprite = metodoSprites.Find(m => m.nombreMetodo == nombreMetodo);
-                if (metodoSprite != null)
-                {
-                    spriteMetodo = metodoSprite.sprite;
-                }
-                
-                ingredienteScript.SetMetodo(nombreMetodo, esCorrecto, spriteMetodo);
+                var (letra, texto, esCorrecto) = opciones[i];
+                // Mostrar la letra y el texto de la respuesta (ej: "A: 15")
+                string textoMostrar = $"{letra}: {texto}";
+                ingredienteScript.SetRespuesta(letra, texto, esCorrecto, textoMostrar);
             }
             else
             {
                 Debug.LogWarning("El prefab no tiene el script Ingrediente.");
             }
         }
+    }
+
+    // Método para obtener el problema actual (útil para debugging)
+    public string[] ObtenerProblemaActual()
+    {
+        return problemaActual;
     }
 }
