@@ -20,12 +20,18 @@ public class GameManagerPuzz : MonoBehaviour
     public Button botonMenuVictoria;
     public Button botonSiguienteNivel;
 
+    [Header("Botones Adicionales")] // Nuevo encabezado
+    public Button botonRegresarMenu; // ¡NUEVA VARIABLE!
+
     [Header("Sonidos")]
     public AudioClip sonidoVictoria;
     public AudioClip sonidoDerrota;
 
     [Header("Configuración del juego")]
     public float tiempoLimite = 120f; // Tiempo total para completar el puzzle
+
+    [Header("Configuración del puzzle")] // ¡Añade este nuevo encabezado!
+    [SerializeField] private int puzzleSize = 3; // ESTA LÍNEA ES CLAVE.
 
     private List<Transform> pieces;
     private int emptyLocation;
@@ -81,9 +87,11 @@ public class GameManagerPuzz : MonoBehaviour
     void Start()
     {
         pieces = new List<Transform>();
-        size = 3;
+        size = puzzleSize;
+        if (size < 2) size = 2; // Protección para evitar errores con puzles < 2x2
+
         CreateGamePieces(0.01f);
-        
+
         // Asegurar que el tiempo esté corriendo
         Time.timeScale = 1f;
         
@@ -104,16 +112,27 @@ public class GameManagerPuzz : MonoBehaviour
         if (pantallaVictoria != null)
             pantallaVictoria.SetActive(false);
 
-        // Configurar botones
         if (botonMenuGameOver != null)
-            botonMenuGameOver.onClick.AddListener(() => SceneManager.LoadScene("Menu"));
+            // Cambiamos el nombre de escena ("Menu") por el índice 0.
+            botonMenuGameOver.onClick.AddListener(() => SceneManager.LoadScene(0));
+
         if (botonMenuVictoria != null)
-            botonMenuVictoria.onClick.AddListener(() => SceneManager.LoadScene("Menu"));
-        if (botonSiguienteNivel != null)
-            botonSiguienteNivel.onClick.AddListener(() => SceneManager.LoadScene("Nivel2"));
+            // Cambiamos el nombre de escena ("Menu") por el índice 0.
+            botonMenuVictoria.onClick.AddListener(() => SceneManager.LoadScene(0));
+        botonSiguienteNivel.onClick.AddListener(() => SceneManager.LoadScene("Nivel2"));
 
         // Hacer shuffle inicial después de crear las piezas
         StartCoroutine(WaitShuffle(0.5f));
+        // ... dentro de void Start()
+
+        // Configurar botones
+        // ... (Tus otras configuraciones de botones)
+
+        if (botonRegresarMenu != null)
+            // Conectamos el botón visible durante el juego a la nueva función
+            botonRegresarMenu.onClick.AddListener(RegresarAlMenuPrincipal);
+
+        // ...
     }
 
     // Update is called once per frame
@@ -257,7 +276,18 @@ public class GameManagerPuzz : MonoBehaviour
 
         PlayerPrefs.SetInt("NivelSuperado", 1);
     }
+    // ...
+    // --- Coloca esta función al final del script ---
 
+    public void RegresarAlMenuPrincipal()
+    {
+        // Aseguramos que el tiempo corra si estaba detenido (Time.timeScale = 0)
+        Time.timeScale = 1;
+        // Cargamos la Escena 0 (tu Menú Principal)
+        SceneManager.LoadScene(0);
+    }
+
+    // ...
     public void Reiniciar()
     {
         Time.timeScale = 1;

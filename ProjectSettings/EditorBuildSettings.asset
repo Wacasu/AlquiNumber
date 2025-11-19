@@ -23,6 +23,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level5.unity
     guid: 366d7a1a0c214d742b79822fd83cf19f
+  - enabled: 1
+    path: Assets/Scenes/NivelDeslizante_Facil.unity
+    guid: e1025956f5b7b1640b1648b95f9bff06
+  - enabled: 1
+    path: Assets/Scenes/NivelDeslizante_Medio.unity
+    guid: 9f0ab713be24ef945bde0ec1c65c6f09
+  - enabled: 1
+    path: Assets/Scenes/NivelDeslizante_Facil.unity
+    guid: 54041b274c1128d498f24436eced5872
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
